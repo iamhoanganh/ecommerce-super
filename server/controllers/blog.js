@@ -39,7 +39,8 @@ Khi người dùng like một bài blog thì:
 // push
 const likeBlog = asyncHandler(async (req, res) => {
     const { _id } = req.user
-    const { bid } = req.body
+    const { bid } = req.params
+    console.log(bid);
     if (!bid) throw new Error('Missing inputs')
     const blog = await Blog.findById(bid)
     const alreadyDisliked = blog?.dislikes?.find(el => el.toString() === _id)
@@ -65,11 +66,61 @@ const likeBlog = asyncHandler(async (req, res) => {
         })
     }
 })
+const dislikeBlog = asyncHandler(async (req, res) => {
+    const { _id } = req.user
+    const { bid } = req.params
+    if (!bid) throw new Error('Missing inputs')
+    const blog = await Blog.findById(bid)
+    const alreadyLiked = blog?.likes?.find(el => el.toString() === _id)
+    if (alreadyLiked) {
+        const response = await Blog.findByIdAndUpdate(bid, { $pull: { likes: _id } }, { new: true })
+        return res.json({
+            success: response ? true : false,
+            rs: response
+        })
+    }
+    const isDisliked = blog?.dislikes?.find(el => el.toString() === _id)
+    if (isDisliked) {
+        const response = await Blog.findByIdAndUpdate(bid, { $pull: { dislikes: _id } }, { new: true })
+        return res.json({
+            success: response ? true : false,
+            rs: response
+        })
+    } else {
+        const response = await Blog.findByIdAndUpdate(bid, { $push: { dislikes: _id } }, { new: true })
+        return res.json({
+            success: response ? true : false,
+            rs: response
+        })
+    }
+})
+const getBlog = asyncHandler(async (req, res) => {
+    const { bid } = req.params
+    const blog = await Blog.findByIdAndUpdate(bid, { $inc: { numberViews: 1 } }, { new: true })
+        .populate('likes', 'firstname lastname')
+        .populate('dislikes', 'firstname lastname')
+    return res.json({
+        success: blog ? true : false,
+        rs: blog
+    })
+})
+const deleteBlog = asyncHandler(async (req, res) => {
+    const { bid } = req.params
+    const blog = await Blog.findByIdAndDelete(bid)
+    return res.json({
+        success: blog ? true : false,
+        deletedBlog: blog || 'Something went wrong'
+    })
+})
+
 
 module.exports = {
     createNewBlog,
     updateBlog,
     getBlogs,
-    likeBlog
+    likeBlog,
+    dislikeBlog,
+    getBlog,
+    deleteBlog
 }
 //eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2VlNDMwODJlODRhODVlMjU4NDMwNDEiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2Nzc2Nzg5NjEsImV4cCI6MTY3Nzg1MTc2MX0.BnP1r4AKh0spfZz5ugYu2PwqIzOLBn9RxGiGO7M_yKc
