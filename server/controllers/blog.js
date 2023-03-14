@@ -112,6 +112,15 @@ const deleteBlog = asyncHandler(async (req, res) => {
         deletedBlog: blog || 'Something went wrong'
     })
 })
+const uploadImagesBlog = asyncHandler(async (req, res) => {
+    const { bid } = req.params
+    if (!req.file) throw new Error('Missing inputs')
+    const response = await Blog.findByIdAndUpdate(bid, { image: req.file.path }, { new: true })
+    return res.status(200).json({
+        status: response ? true : false,
+        updatedBlog: response ? response : 'Cannot upload image blog'
+    })
+})
 
 
 module.exports = {
@@ -121,6 +130,7 @@ module.exports = {
     likeBlog,
     dislikeBlog,
     getBlog,
-    deleteBlog
+    deleteBlog,
+    uploadImagesBlog
 }
 //eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2VlNDMwODJlODRhODVlMjU4NDMwNDEiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2Nzc2Nzg5NjEsImV4cCI6MTY3Nzg1MTc2MX0.BnP1r4AKh0spfZz5ugYu2PwqIzOLBn9RxGiGO7M_yKc
