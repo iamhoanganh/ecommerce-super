@@ -10,7 +10,7 @@ import path from '../ultils/path'
 
 const { AiFillEye, AiOutlineMenu, BsFillSuitHeartFill } = icons
 
-const Product = ({ productData, isNew }) => {
+const Product = ({ productData, isNew, normal }) => {
     const [isShowOption, setIsShowOption] = useState(false)
 
     // chi-tiet-san-pham/pid/title/asdasds
@@ -42,7 +42,7 @@ const Product = ({ productData, isNew }) => {
                         alt=""
                         className='w-[274px] h-[274px]  object-cover'
                     />
-                    <img src={isNew ? label : trending} alt="" className={`absolute w-[100px] h-[35px] top-0 right-[0] object-cover`} />
+                    {!normal && <img src={isNew ? label : trending} alt="" className={`absolute w-[100px] h-[35px] top-0 right-[0] object-cover`} />}
                 </div>
                 <div className='flex flex-col mt-[15px] items-start gap-1 w-full'>
                     <span className='flex h-4'>{renderStarFromNumber(productData?.totalRatings)?.map((el, index) => (
