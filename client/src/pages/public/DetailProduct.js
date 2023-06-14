@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { apiGetProduct, apiGetProducts } from '../../apis'
-import { Breadcrumb, Button, SelectQuantity, ProductExtraInfoItem, ProductInfomation, CustomSlider } from '../../components'
+import { apiGetProduct, apiGetProducts } from 'apis'
+import { Breadcrumb, Button, SelectQuantity, ProductExtraInfoItem, ProductInfomation, CustomSlider } from 'components'
 import Slider from 'react-slick'
 import ReactImageMagnify from 'react-image-magnify';
-import { formatMoney, fotmatPrice, renderStarFromNumber } from '../../ultils/helpers'
-import { productExtraInfomation } from '../../ultils/contants'
+import { formatMoney, fotmatPrice, renderStarFromNumber } from 'ultils/helpers'
+import { productExtraInfomation } from 'ultils/contants'
 
 const settings = {
     dots: false,
