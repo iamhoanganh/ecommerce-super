@@ -1,8 +1,8 @@
-import React, { Fragment } from 'react'
-import logo from '../assets/logo.png'
-import icons from '../ultils/icons'
+import React, { Fragment, memo } from 'react'
+import logo from 'assets/logo.png'
+import icons from 'ultils/icons'
 import { Link } from 'react-router-dom'
-import path from '../ultils/path'
+import path from 'ultils/path'
 import { useSelector } from 'react-redux'
 
 
@@ -48,4 +48,4 @@ const Header = () => {
     )
 }
 
-export default Header
+export default memo(Header)

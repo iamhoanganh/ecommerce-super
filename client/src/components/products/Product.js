@@ -1,12 +1,11 @@
-import React, { useState } from 'react'
-import { formatMoney } from '../ultils/helpers'
-import label from '../assets/new.png'
-import trending from '../assets/trending.png'
-import { renderStarFromNumber } from '../ultils/helpers'
-import { SelectOption } from './'
-import icons from '../ultils/icons'
+import React, { useState, memo } from 'react'
+import { formatMoney } from 'ultils/helpers'
+import label from 'assets/new.png'
+import trending from 'assets/trending.png'
+import { renderStarFromNumber } from 'ultils/helpers'
+import { SelectOption } from 'components'
+import icons from 'ultils/icons'
 import { Link } from 'react-router-dom'
-import path from '../ultils/path'
 
 const { AiFillEye, AiOutlineMenu, BsFillSuitHeartFill } = icons
 
@@ -56,4 +55,4 @@ const Product = ({ productData, isNew, normal }) => {
     )
 }
 
-export default Product
+export default memo(Product)

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
-import { apiGetProducts } from '../apis/product'
-import { Product, CustomSlider } from './'
-import { getNewProducts } from '../store/products/asynsActions'
+import React, { useState, useEffect, memo } from 'react'
+import { apiGetProducts } from 'apis/product'
+import { CustomSlider } from 'components'
+import { getNewProducts } from 'store/products/asynsActions'
 import { useDispatch, useSelector } from 'react-redux'
 
 const tabs = [
@@ -61,4 +61,4 @@ const BestSeller = () => {
     )
 }
 
-export default BestSeller
+export default memo(BestSeller)
