@@ -13,7 +13,7 @@ const createProduct = asyncHandler(async (req, res) => {
     const newProduct = await Product.create(req.body)
     return res.status(200).json({
         success: newProduct ? true : false,
-        createdProduct: newProduct ? newProduct : 'Cannot create new product'
+        mes: newProduct ? 'Created' : 'Failed.'
     })
 })
 const getProduct = asyncHandler(async (req, res) => {

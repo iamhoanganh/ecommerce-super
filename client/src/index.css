@@ -101,3 +101,7 @@ input {
 code {
     white-space: initial;
 }
+
+.my-auto {
+    margin: auto 0;
+}
