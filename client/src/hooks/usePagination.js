@@ -22,7 +22,6 @@ const usePagination = (totalProductCount, currentPage, siblingCount = 1) => {
         }
 
         if (!isShowLeft && isShowRight) {
-            console.log(123)
             const leftRange = generateRange(1, 5)
             return [...leftRange, <BiDotsHorizontalRounded />, paginationCount]
         }

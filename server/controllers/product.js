@@ -42,7 +42,6 @@ const getProducts = asyncHandler(async (req, res) => {
     queryString = queryString.replace(/\b(gte|gt|lt|lte)\b/g, macthedEl => `$${macthedEl}`)
     const formatedQueries = JSON.parse(queryString)
     let colorQueryObject = {}
-    // Filtering
     if (queries?.title) formatedQueries.title = { $regex: queries.title, $options: 'i' }
     if (queries?.category) formatedQueries.category = { $regex: queries.category, $options: 'i' }
     if (queries?.color) {
@@ -51,8 +50,21 @@ const getProducts = asyncHandler(async (req, res) => {
         const colorQuery = colorArr.map(el => ({ color: { $regex: el, $options: 'i' } }))
         colorQueryObject = { $or: colorQuery }
     }
-    const q = { ...colorQueryObject, ...formatedQueries }
-    let queryCommand = Product.find(q)
+    let queryObject = {}
+    if (queries?.q) {
+        delete formatedQueries.q
+        queryObject = {
+            $or: [
+                { color: { $regex: queries.q, $options: 'i' } },
+                { title: { $regex: queries.q, $options: 'i' } },
+                { category: { $regex: queries.q, $options: 'i' } },
+                { brand: { $regex: queries.q, $options: 'i' } },
+                // { description: { $regex: queries.q, $options: 'i' } },
+            ]
+        }
+    }
+    const qr = { ...colorQueryObject, ...formatedQueries, ...queryObject }
+    let queryCommand = Product.find(qr)
 
     // Sorting
     if (req.query.sort) {
@@ -75,7 +87,7 @@ const getProducts = asyncHandler(async (req, res) => {
     // Số lượng sp thỏa mãn điều kiện !== số lượng sp trả về 1 lần gọi API
     queryCommand.exec(async (err, response) => {
         if (err) throw new Error(err.message)
-        const counts = await Product.find(q).countDocuments()
+        const counts = await Product.find(qr).countDocuments()
         return res.status(200).json({
             success: response ? true : false,
             counts,
