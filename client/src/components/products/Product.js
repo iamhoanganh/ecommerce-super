@@ -5,18 +5,21 @@ import trending from 'assets/trending.png'
 import { renderStarFromNumber } from 'ultils/helpers'
 import { SelectOption } from 'components'
 import icons from 'ultils/icons'
-import { Link } from 'react-router-dom'
 import withBaseComponent from 'hocs/withBaseComponent'
+import { showModal } from 'store/app/appSlice'
+import { DetailProduct } from 'pages/public'
 
 const { AiFillEye, AiOutlineMenu, BsFillSuitHeartFill } = icons
 
-const Product = ({ productData, isNew, normal, navigate }) => {
+const Product = ({ productData, isNew, normal, navigate, dispatch }) => {
     const [isShowOption, setIsShowOption] = useState(false)
     const handleClickOptions = (e, flag) => {
         e.stopPropagation()
         if (flag === 'MENU') navigate(`/${productData?.category?.toLowerCase()}/${productData?._id}/${productData?.title}`)
         if (flag === 'WISHLIST') console.log('WISHLIST')
-        if (flag === 'QUICK_VIEW') console.log('QUICK VIEW')
+        if (flag === 'QUICK_VIEW') {
+            dispatch(showModal({ isShowModal: true, modalChildren: <DetailProduct data={{ pid: productData?._id, category: productData?.category }} isQuickView /> }))
+        }
     }
     return (
         <div className='w-full text-base px-[10px]'>
