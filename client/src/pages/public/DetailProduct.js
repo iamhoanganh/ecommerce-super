@@ -68,6 +68,14 @@ const DetailProduct = ({ isQuickView, data, location, dispatch, navigate }) => {
                 price: product?.varriants?.find(el => el.sku === varriant)?.price,
                 thumb: product?.varriants?.find(el => el.sku === varriant)?.thumb,
             })
+        } else {
+            setCurrentProduct({
+                title: product?.title,
+                color: product?.color,
+                images: product?.images || [],
+                price: product?.price,
+                thumb: product?.thumb,
+            })
         }
     }, [varriant])
     const fetchProducts = async () => {
@@ -119,7 +127,14 @@ const DetailProduct = ({ isQuickView, data, location, dispatch, navigate }) => {
                 search: createSearchParams({ redirect: location.pathname }).toString()
             })
         })
-        const response = await apiUpdateCart({ pid, color: currentProduct.color, quantity })
+        const response = await apiUpdateCart({
+            pid,
+            color: currentProduct.color || product?.color,
+            quantity,
+            price: currentProduct.price || product.price,
+            thumbnail: currentProduct.thumb || product.thumb,
+            title: currentProduct.title || product.title,
+        })
         if (response.success) {
             toast.success(response.mes)
             dispatch(getCurrent())
@@ -152,12 +167,12 @@ const DetailProduct = ({ isQuickView, data, location, dispatch, navigate }) => {
                     </div>
                     <div className='w-[458px]'>
                         <Slider className='image-slider flex gap-2 justify-between' {...settings}>
-                            {currentProduct.images.length === 0 && product?.images?.map(el => (
+                            {currentProduct.images?.length === 0 && product?.images?.map(el => (
                                 <div className='flex-1' key={el}>
                                     <img onClick={e => handleClickImage(e, el)} src={el} alt='sub-product' className='w-[143px] cursor-pointer h-[143px] border object-cover' />
                                 </div>
                             ))}
-                            {currentProduct.images.length > 0 && currentProduct.images?.map(el => (
+                            {currentProduct.images?.length > 0 && currentProduct.images?.map(el => (
                                 <div className='flex-1' key={el}>
                                     <img onClick={e => handleClickImage(e, el)} src={el} alt='sub-product' className='w-[143px] cursor-pointer h-[143px] border object-cover' />
                                 </div>
@@ -193,6 +208,7 @@ const DetailProduct = ({ isQuickView, data, location, dispatch, navigate }) => {
                             </div>
                             {product?.varriants?.map(el => (
                                 <div
+                                    key={el.sku}
                                     onClick={() => setVarriant(el.sku)}
                                     className={clsx('flex items-center gap-2 p-2 border cursor-pointer', varriant === el.sku && 'border-red-500')}
                                 >

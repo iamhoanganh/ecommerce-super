@@ -13,13 +13,14 @@ import path from 'ultils/path'
 
 const Cart = ({ dispatch, navigate }) => {
     const { current } = useSelector(state => state.user)
-    const removeCart = async (pid) => {
-        const response = await apiRemoveCart(pid)
+    const removeCart = async (pid, color) => {
+        const response = await apiRemoveCart(pid, color)
         if (response.success) {
             dispatch(getCurrent())
         }
         else toast.error(response.mes)
     }
+    // console.log(current.cart)
     return (
         <div onClick={e => e.stopPropagation()} className='w-[400px] h-screen bg-black grid grid-rows-10 text-white p-6'>
             <header className='border-b border-gray-500 flex justify-between items-center row-span-1 h-full font-bold text-2xl'>
@@ -31,14 +32,14 @@ const Cart = ({ dispatch, navigate }) => {
                 {current?.cart && current?.cart?.map(el => (
                     <div key={el._id} className='flex justify-between items-center'>
                         <div className='flex gap-2'>
-                            <img src={el.product?.thumb} alt="thumb" className='w-16 h-16 object-cover' />
+                            <img src={el.thumbnail} alt="thumb" className='w-16 h-16 object-cover' />
                             <div className='flex flex-col gap-1'>
-                                <span className='text-sm text-main'>{el.product?.title}</span>
+                                <span className='text-sm text-main'>{el.title}</span>
                                 <span className='text-[10px]'>{el.color}</span>
-                                <span className='text-sm'>{formatMoney(el.product?.price) + ' VND'}</span>
+                                <span className='text-sm'>{formatMoney(el.price) + ' VND'}</span>
                             </div>
                         </div>
-                        <span onClick={() => removeCart(el.product?._id)} className='h-8 w-8 rounded-full flex items-center justify-center hover:bg-gray-700 cursor-pointer'><ImBin size={16} /></span>
+                        <span onClick={() => removeCart(el.product?._id, el.color)} className='h-8 w-8 rounded-full flex items-center justify-center hover:bg-gray-700 cursor-pointer'><ImBin size={16} /></span>
                     </div>
                 ))}
             </section>

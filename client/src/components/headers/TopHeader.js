@@ -1,19 +1,18 @@
-import React, { memo, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import path from 'ultils/path'
 import { getCurrent } from 'store/user/asyncActions'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import icons from 'ultils/icons'
 import { logout, clearMessage } from 'store/user/userSlice'
 import Swal from 'sweetalert2'
 
 const { AiOutlineLogout } = icons
 
-const TopHeader = () => {
+const TopHeaders = () => {
+    const { isLoggedIn, current, mes } = useSelector(state => state.user)
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const { isLoggedIn, current, mes } = useSelector(state => state.user)
-
     useEffect(() => {
         const setTimeoutId = setTimeout(() => {
             if (isLoggedIn) dispatch(getCurrent())
@@ -49,4 +48,4 @@ const TopHeader = () => {
     )
 }
 
-export default memo(TopHeader)
+export default TopHeaders
