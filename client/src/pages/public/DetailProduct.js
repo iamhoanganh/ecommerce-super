@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { createSearchParams, useParams } from 'react-router-dom'
 import { apiGetProduct, apiGetProducts, apiUpdateCart } from 'apis'
 import { Breadcrumb, Button, SelectQuantity, ProductExtraInfoItem, ProductInfomation, CustomSlider } from 'components'
@@ -24,7 +24,7 @@ const settings = {
 };
 
 const DetailProduct = ({ isQuickView, data, location, dispatch, navigate }) => {
-
+    const titleRef = useRef()
     const params = useParams()
     const { current } = useSelector(state => state.user)
     const [product, setProduct] = useState(null)
@@ -77,7 +77,7 @@ const DetailProduct = ({ isQuickView, data, location, dispatch, navigate }) => {
                 thumb: product?.thumb,
             })
         }
-    }, [varriant])
+    }, [varriant, product])
     const fetchProducts = async () => {
         const response = await apiGetProducts({ category })
         if (response.success) setRelatedProducts(response.products)
@@ -88,6 +88,7 @@ const DetailProduct = ({ isQuickView, data, location, dispatch, navigate }) => {
             fetchProducts()
         }
         window.scrollTo(0, 0)
+        titleRef.current.scrollIntoView({ block: 'center' })
     }, [pid])
     useEffect(() => {
         if (pid) fetchProductData()
@@ -141,10 +142,11 @@ const DetailProduct = ({ isQuickView, data, location, dispatch, navigate }) => {
         }
         else toast.error(response.mes)
     }
+
     return (
         <div className={clsx('w-full')}>
             {!isQuickView && <div className='h-[81px] flex justify-center items-center bg-gray-100'>
-                <div className='w-main'>
+                <div ref={titleRef} className='w-main'>
                     <h3 className='font-semibold'>{currentProduct.title || product?.title}</h3>
                     <Breadcrumb title={currentProduct.title || product?.title} category={category} />
                 </div>
