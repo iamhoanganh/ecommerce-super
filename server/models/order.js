@@ -12,8 +12,8 @@ var orderSchema = new mongoose.Schema({
     }],
     status: {
         type: String,
-        default: 'Proccessing',
-        enum: ['Cancelled', 'Proccessing', 'Succeed']
+        default: 'Cancelled',
+        enum: ['Cancelled', 'Succeed']
     },
     total: Number,
     orderBy: {
