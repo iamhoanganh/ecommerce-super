@@ -20,6 +20,7 @@ const Personal = () => {
             mobile: current?.mobile,
             email: current?.email,
             avatar: current?.avatar,
+            address: current?.address,
         })
     }, [current])
     // const handleFile = async () => {
@@ -30,7 +31,6 @@ const Personal = () => {
     // useEffect(() => {
     //     if (watch('avatar') && isDirty) handleFile()
     // }, [watch('avatar')])
-    console.log(watch('avatar'))
     const handleUpdateInfor = async (data) => {
         const formData = new FormData()
         if (data.avatar.length > 0) formData.append('avatar', data.avatar[0])
@@ -89,6 +89,15 @@ const Personal = () => {
                             message: 'Phone invalid.'
                         }
 
+                    }}
+                />
+                <InputForm
+                    label='Address'
+                    register={register}
+                    errors={errors}
+                    id='address'
+                    validate={{
+                        required: 'Need fill this field',
                     }}
                 />
                 <div className='flex items-center gap-2'>
