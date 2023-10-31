@@ -248,7 +248,7 @@ export const memberSidebar = [
   {
     id: 4,
     type: "SINGLE",
-    text: "Wislist",
+    text: "Wishlist",
     path: `/${path.MEMBER}/${path.WISHLIST}`,
     icon: <RiBillLine size={20} />,
   },

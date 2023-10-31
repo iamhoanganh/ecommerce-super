@@ -1,31 +1,38 @@
-import { configureStore } from '@reduxjs/toolkit';
-import appSlice from './app/appSlice';
-import productSlice from './products/productSlice';
-import userSlice from './user/userSlice'
-import storage from 'redux-persist/lib/storage'
+import { configureStore } from "@reduxjs/toolkit"
+import appSlice from "./app/appSlice"
+import productSlice from "./products/productSlice"
+import userSlice from "./user/userSlice"
+import storage from "redux-persist/lib/storage"
 import {
-  persistReducer, persistStore, FLUSH,
+  persistReducer,
+  persistStore,
+  FLUSH,
   REHYDRATE,
   PAUSE,
   PERSIST,
   PURGE,
   REGISTER,
-} from 'redux-persist';
+} from "redux-persist"
 
 const commonConfig = {
-  key: 'shop/user',
-  storage
+  storage,
 }
 const userConfig = {
   ...commonConfig,
-  whitelist: ['isLoggedIn', 'token', 'current', 'currentCart']
+  whitelist: ["isLoggedIn", "token", "current", "currentCart"],
+  key: "shop/user",
+}
+const productConfig = {
+  ...commonConfig,
+  whitelist: ["dealDaily"],
+  key: "shop/deal",
 }
 
 export const store = configureStore({
   reducer: {
     app: appSlice,
-    products: productSlice,
-    user: persistReducer(userConfig, userSlice)
+    products: persistReducer(productConfig, productSlice),
+    user: persistReducer(userConfig, userSlice),
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -33,6 +40,6 @@ export const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }),
-});
+})
 
 export const persistor = persistStore(store)
