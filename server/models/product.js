@@ -14,7 +14,7 @@ var productSchema = new mongoose.Schema({
         lowercase: true
     },
     description: {
-        type: Array,
+        type: String,
         required: true,
     },
     brand: {
@@ -44,10 +44,6 @@ var productSchema = new mongoose.Schema({
     images: {
         type: Array
     },
-    color: {
-        type: String,
-        require: true
-    },
     ratings: [
         {
             star: { type: Number },
@@ -63,11 +59,8 @@ var productSchema = new mongoose.Schema({
     varriants: [
         {
             color: String,
+            size: String,
             price: Number,
-            thumb: String,
-            images: Array,
-            title: String,
-            sku: String
         }
     ]
 }, {

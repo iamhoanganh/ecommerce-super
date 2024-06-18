@@ -2,11 +2,13 @@ const Product = require("../models/product")
 const asyncHandler = require("express-async-handler")
 const slugify = require("slugify")
 const makeSKU = require("uniqid")
+const groupBy = require("../ultils/groupBy")
 
 const createProduct = asyncHandler(async (req, res) => {
   const { title, price, description, brand, category, color } = req.body
-  const thumb = req?.files?.thumb[0]?.path
-  const images = req.files?.images?.map((el) => el.path)
+  const serverUrl = process.env.URL_SERVER || 'http://localhost:5000'
+  const thumb = serverUrl + "/products/" + req?.files?.thumb[0]?.filename
+  const images =  req.files?.images?.map((el) => serverUrl + "/products/" + el.filename)
   if (!(title && price && description && brand && category && color))
     throw new Error("Missing inputs")
   req.body.slug = slugify(title)
@@ -16,6 +18,7 @@ const createProduct = asyncHandler(async (req, res) => {
   return res.status(200).json({
     success: newProduct ? true : false,
     mes: newProduct ? "Created" : "Failed.",
+    data: newProduct,
   })
 })
 const getProduct = asyncHandler(async (req, res) => {
@@ -97,12 +100,29 @@ const getProducts = asyncHandler(async (req, res) => {
   // Execute query
   // Số lượng sp thỏa mãn điều kiện !== số lượng sp trả về 1 lần gọi API
   queryCommand.exec(async (err, response) => {
+    const productsData = [...response]
+    const result = productsData.map((el) => {
+      const { varriants } = el
+      if (varriants.length > 0) {
+        const minPrice = Math.min(...varriants.map((el) => el.price))
+        const maxPrice = Math.max(...varriants.map((el) => el.price))
+        const varriantsByColor = groupBy(varriants, "color")
+        const varriantsBySize = groupBy(varriants, "size")
+        return {
+          ...el._doc,
+          price: { min: minPrice, max: maxPrice },
+          varriantsByColor,
+          varriantsBySize
+        }
+      }
+      return el
+    })
     if (err) throw new Error(err.message)
     const counts = await Product.find(qr).countDocuments()
     return res.status(200).json({
       success: response ? true : false,
       counts,
-      products: response ? response : "Cannot get products",
+      products: response ? result : "Cannot get products",
     })
   })
 })

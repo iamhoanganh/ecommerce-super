@@ -17,6 +17,8 @@ const port = process.env.PORT || 8888
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 dbConnect()
+// Serving static files
+app.use(express.static("public/images"));
 initRoutes(app)
 
 app.listen(port, () => {
