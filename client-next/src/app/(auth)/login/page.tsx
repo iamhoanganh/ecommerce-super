@@ -1,5 +1,4 @@
 'use client'
-import { ModeToggle } from "@/components/mode-toggle";
 import { useEffect, useState } from "react";
 
 export default function LoginPage() {
@@ -17,7 +16,6 @@ export default function LoginPage() {
         <>
             <div>Login Page</div>
             <span>{email}</span>
-            <ModeToggle />
         </>
     );
 }
