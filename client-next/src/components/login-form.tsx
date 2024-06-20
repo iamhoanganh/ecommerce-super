@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import {LoginBody, LoginBodyType} from "@/schemaValidations/auth.schema";
+import envConfig from '@/config'
 
 
 export default function LoginForm() {
@@ -27,10 +28,15 @@ export default function LoginForm() {
   })
  
   // 2. Define a submit handler.
-  function onSubmit(values: LoginBodyType) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
+  async function onSubmit(values: LoginBodyType) {
+    const result = await fetch(`${envConfig.NEXT_PUBLIC_API_URL}/user/login`, {
+      body: JSON.stringify(values),
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(res => res.json())
+    console.log("result", result);
   }
   return (
     <Form {...form}>
