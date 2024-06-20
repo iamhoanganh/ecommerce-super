@@ -1,21 +1,13 @@
-'use client'
-import { useEffect, useState } from "react";
-
+import React from 'react';
+import LoginForm from "@/components/login-form";
 export default function LoginPage() {
-    const [email, setEmail] = useState("hoanganh@gmail.com")
-    useEffect(() => {
-        const idTimeOut = setTimeout(() => {
-            setEmail("quoac quoac")
-        }, 5000)
-        return () => {
-            clearTimeout(idTimeOut)
-        }
-    }, [])
-    
+
     return (
         <>
-            <div>Login Page</div>
-            <span>{email}</span>
+            <h2 className="text-center text-xl font-semibold">Đăng Nhập</h2>
+            <div className="flex mx-auto justify-center">
+                <LoginForm/>
+            </div>
         </>
     );
 }

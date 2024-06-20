@@ -3,7 +3,6 @@ import React from 'react'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 
-import { z } from "zod"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -14,33 +13,28 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
- 
-const formSchema = z.object({
-  email: z.string().min(2).max(50).email(),
-  password: z.string().min(6),
-})
+import {LoginBody, LoginBodyType} from "@/schemaValidations/auth.schema";
 
-type FormValues = z.infer<typeof formSchema>
 
-export default function RegisterForm() {
+export default function LoginForm() {
   // 1. Define your form.
-  const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<LoginBodyType>({
+    resolver: zodResolver(LoginBody),
     defaultValues: {
-      email: "",
-      password: "",
+      email: "iamhoanganh13@gmail.com",
+      password: "Nguyenanh1101",
     },
   })
  
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: LoginBodyType) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values)
   }
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 max-w-[400px] w-full" noValidate>
         <FormField
           control={form.control}
           name="email"
@@ -48,7 +42,7 @@ export default function RegisterForm() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input type="email" placeholder="shadcn@example.com" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -59,7 +53,7 @@ export default function RegisterForm() {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Password</FormLabel>
+              <FormLabel>Mật khẩu</FormLabel>
               <FormControl>
                 <Input type="password" placeholder="123456" {...field} />
               </FormControl>
@@ -67,7 +61,7 @@ export default function RegisterForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit" className="!mt-8 w-full">Submit</Button>
       </form>
     </Form>
   )
