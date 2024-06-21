@@ -7,7 +7,7 @@ export default function Header() {
     <div className="flex justify-between items-center mx-3 my-2"> 
       <ul className="flex gap-2 ">
         <li className="text-blue-600">
-          <Link href="/register">Đăng ký</Link>
+          <Link href="/">Trang chủ</Link>
         </li>
         <li>
           <Link href="/login">Đăng nhập</Link>

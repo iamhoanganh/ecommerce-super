@@ -16,9 +16,12 @@ import { Input } from "@/components/ui/input";
 import { LoginBody, LoginBodyType } from "@/schemaValidations/auth.schema";
 import envConfig from "@/config";
 import { useToast } from "@/components/ui/use-toast";
+import { useAppContext } from "@/app/AppProvider";
 
 export default function LoginForm() {
   const { toast } = useToast();
+  const {setSessiontoken} = useAppContext()
+
 
   // 1. Define your form.
   const form = useForm<LoginBodyType>({
@@ -55,6 +58,21 @@ export default function LoginForm() {
       toast({
         description: "Dang nhap thanh cong",
       })
+      const resultFromNextServer = await fetch('/api/auth', {
+        method: 'POST',
+        body: JSON.stringify(result),
+      }).then(async (res) => {
+        const payload = await res.json();
+        const data = {
+          status: res.status,
+          payload,
+        };
+        if (!res.ok) {
+          throw data;
+        }
+        return data;
+      });
+      setSessiontoken(resultFromNextServer.payload.accessToken)
     } catch (error: any) {
       const {payload} = error
       const status = error.status;
@@ -102,7 +120,9 @@ export default function LoginForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" className="!mt-8 w-full">
+        <Button type="submit" className="!mt-8 w-full" onClick={(e) => {
+            // e.preventDefault();
+        }}>
           Submit
         </Button>
       </form>
