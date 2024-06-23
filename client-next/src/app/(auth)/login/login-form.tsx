@@ -17,10 +17,13 @@ import { LoginBody, LoginBodyType } from "@/schemaValidations/auth.schema";
 import envConfig from "@/config";
 import { useToast } from "@/components/ui/use-toast";
 import { useAppContext } from "@/app/AppProvider";
+import authApiRequest from "@/apiRequests/auth";
+import {useRouter} from "next/navigation";
 
 export default function LoginForm() {
   const { toast } = useToast();
   const {setSessiontoken} = useAppContext()
+  const router = useRouter()
 
 
   // 1. Define your form.
@@ -35,44 +38,13 @@ export default function LoginForm() {
   // 2. Define a submit handler.
   async function onSubmit(values: LoginBodyType) {
     try {
-      const result = await fetch(
-        `${envConfig.NEXT_PUBLIC_API_URL}/user/login`,
-        {
-          body: JSON.stringify(values),
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      ).then(async (res) => {
-        const payload = await res.json();
-        const data = {
-          status: res.status,
-          payload,
-        };
-        if (!res.ok) {
-          throw data;
-        }
-        return data;
-      });
+      const result = await authApiRequest.login(values)
       toast({
-        description: "Dang nhap thanh cong",
+        description: result.status === 200 ? "Dang nhap thanh cong" : "Dang nhap that bai",
       })
-      const resultFromNextServer = await fetch('/api/auth', {
-        method: 'POST',
-        body: JSON.stringify(result),
-      }).then(async (res) => {
-        const payload = await res.json();
-        const data = {
-          status: res.status,
-          payload,
-        };
-        if (!res.ok) {
-          throw data;
-        }
-        return data;
-      });
-      setSessiontoken(resultFromNextServer.payload.accessToken)
+      const resultFromNextServer = await authApiRequest.auth({sessionToken: result.payload.accessToken});
+      setSessiontoken(resultFromNextServer.payload.sessionToken)
+      router.push('/me')
     } catch (error: any) {
       const {payload} = error
       const status = error.status;

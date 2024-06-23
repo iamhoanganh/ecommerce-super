@@ -43,8 +43,36 @@ export const LoginBody = z
   .strict()
 
 export type LoginBodyType = z.TypeOf<typeof LoginBody>
+export const LoginRes = z.object({
+    userData: z.object({
+        _id: z.string(),
+        address: z.string(),
+        createdAt: z.string(),
+        avatar: z.string(),
+        cart: z.array(z.object({
+            color: z.string(),
+            price: z.number(),
+            product: z.string(),
+            quantity: z.number(),
+            thumbnail: z.string(),
+            title: z.string(),
+            _id: z.string(),
+        })),
+        email: z.string(),
+        firstname: z.string(),
+        isBlocked: z.boolean(),
+        lastname: z.string(),
+        mobile: z.string(),
+        passwordChangedAt: z.string(),
+        updatedAt: z.string(),
+        wishlist: z.array(z.string()),
+    }),
+    accessToken: z.string(),
+    success: z.boolean()
 
-export const LoginRes = RegisterRes
+})
+
+// export const LoginRes = RegisterRes
 
 export type LoginResType = z.TypeOf<typeof LoginRes>
 export const SlideSessionBody = z.object({}).strict()
