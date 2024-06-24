@@ -104,13 +104,13 @@ const getProducts = asyncHandler(async (req, res) => {
     const result = productsData.map((el) => {
       const { varriants } = el
       if (varriants.length > 0) {
-        const minPrice = Math.min(...varriants.map((el) => el.price))
-        const maxPrice = Math.max(...varriants.map((el) => el.price))
+        // const minPrice = Math.min(...varriants.map((el) => el.price))
+        // const maxPrice = Math.max(...varriants.map((el) => el.price))
         const varriantsByColor = groupBy(varriants, "color")
         const varriantsBySize = groupBy(varriants, "size")
         return {
           ...el._doc,
-          price: { min: minPrice, max: maxPrice },
+          price: varriants[0].price,
           varriantsByColor,
           varriantsBySize
         }

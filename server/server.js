@@ -7,8 +7,16 @@ const cors = require('cors')
 
 
 const app = express()
+// i need multi origin for cors
 app.use(cors({
-    origin: process.env.CLIENT_URL,
+    origin: function (origin, callback) {
+        const allowedOrigins = process.env.CLIENT_URL.split(','); // Assuming CLIENT_URLS is a comma-separated list of allowed origins
+        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     methods: ['POST', 'PUT', 'GET', 'DELETE'],
     credentials: true
 }))
