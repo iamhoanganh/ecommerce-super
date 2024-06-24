@@ -6,6 +6,14 @@ const authApiRequest = {
     register: (body: RegisterBodyType) => http.post<RegisterResType>('/user/register', body),
     auth: (body: {sessionToken: string}) => http.post<any>('/api/auth', body, {
         baseUrl: ""
+    }),
+    logoutFromNextServerToServer: (sessionToken: string) => http.post('user/logout', {}, {
+        headers: {
+            Authorization: `Bearer ${sessionToken}`
+        }
+    }),
+    logoutFormNextClientToNextServer: (sessionToken: string) => http.post('/api/auth/logout', {}, {
+        baseUrl: "",
     })
 
 }

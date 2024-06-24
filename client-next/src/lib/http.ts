@@ -1,6 +1,7 @@
 import envConfig from '@/config'
 import { LoginResType } from '@/schemaValidations/auth.schema'
 import { redirect } from 'next/navigation'
+import { normalizePath } from './utils'
 
 type CustomOptions = Omit<RequestInit, 'method'> & {
     baseUrl?: string | undefined
@@ -33,10 +34,7 @@ export class HttpError extends Error {
 export class EntityError extends HttpError {
     status: 422
     payload: EntityErrorPayload
-    constructor({
-                    status,
-                    payload
-                }: {
+    constructor({status, payload}: {
         status: 422
         payload: EntityErrorPayload
     }) {
@@ -136,21 +134,21 @@ const request = async <Response>(
     //         throw new HttpError(data)
     //     }
     // }
-    // // Đảm bảo logic dưới đây chỉ chạy ở phía client (browser)
-    // if (isClient()) {
-    //     if (
-    //         ['auth/login', 'auth/register'].some(
-    //             (item) => item === normalizePath(url)
-    //         )
-    //     ) {
-    //         const { token, expiresAt } = (payload as LoginResType).data
-    //         localStorage.setItem('sessionToken', token)
-    //         localStorage.setItem('sessionTokenExpiresAt', expiresAt)
-    //     } else if ('auth/logout' === normalizePath(url)) {
-    //         localStorage.removeItem('sessionToken')
-    //         localStorage.removeItem('sessionTokenExpiresAt')
-    //     }
-    // }
+    // Đảm bảo logic dưới đây chỉ chạy ở phía client (browser)
+    if (isClient()) {
+        if (
+            ['auth/login', 'auth/register'].some(
+                (item) => item === normalizePath(url)
+            )
+        ) {
+            const { accessToken } = (payload as LoginResType)
+            localStorage.setItem('sessionToken', accessToken)
+            // localStorage.setItem('sessionTokenExpiresAt', expiresAt)
+        } else if ('auth/logout' === normalizePath(url)) {
+            localStorage.removeItem('sessionToken')
+            localStorage.removeItem('sessionTokenExpiresAt')
+        }
+    }
     return data
 }
 

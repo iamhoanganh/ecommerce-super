@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
@@ -21,6 +21,7 @@ import authApiRequest from "@/apiRequests/auth";
 import {useRouter} from "next/navigation";
 
 export default function LoginForm() {
+  const [isLoading, setIsLoading] = useState(false)
   const { toast } = useToast();
   const {setSessiontoken} = useAppContext()
   const router = useRouter()
@@ -37,6 +38,8 @@ export default function LoginForm() {
 
   // 2. Define a submit handler.
   async function onSubmit(values: LoginBodyType) {
+    if (isLoading) return
+    setIsLoading(true)
     try {
       const result = await authApiRequest.login(values)
       toast({
@@ -53,6 +56,8 @@ export default function LoginForm() {
           description: payload.mes,
         });
       }
+    } finally {
+      setIsLoading(false)
     }
   }
   return (
@@ -94,7 +99,7 @@ export default function LoginForm() {
         />
         <Button type="submit" className="!mt-8 w-full" onClick={(e) => {
             // e.preventDefault();
-        }}>
+        }} disabled={isLoading}>
           Submit
         </Button>
       </form>
