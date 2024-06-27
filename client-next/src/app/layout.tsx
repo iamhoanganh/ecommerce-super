@@ -6,6 +6,7 @@ import Header from "@/components/header";
 import { Toaster } from "@/components/ui/toaster";
 import AppProvider from "./AppProvider";
 import { cookies } from "next/headers";
+import Footer from "@/components/footer";
 
 const inter = Inter({ subsets: ["vietnamese"] });
 
@@ -33,6 +34,7 @@ export default function RootLayout({
         >
           <Header />
           <AppProvider initialSessionToken={sessionToken?.value}>{children}</AppProvider>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
