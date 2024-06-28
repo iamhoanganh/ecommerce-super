@@ -52,17 +52,15 @@ var productSchema = new mongoose.Schema({
             updatedAt: { type: Date }
         }
     ],
-    totalRatings: {
-        type: Number,
-        default: 0
-    },
-    varriants: [
-        {
-            color: String,
-            size: String,
-            price: Number,
-        }
-    ]
+    varriants: {
+        color: { type: Array },
+        size: { type: Array },
+        sexual: { type: Array,
+            default: "nam"
+         },
+        origin: { type: Array },
+        material: { type: Array },
+    }
 }, {
     timestamps: true
 });

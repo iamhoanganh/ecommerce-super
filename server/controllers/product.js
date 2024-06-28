@@ -5,15 +5,23 @@ const makeSKU = require("uniqid")
 const groupBy = require("../ultils/groupBy")
 
 const createProduct = asyncHandler(async (req, res) => {
-  const { title, price, description, brand, category, color } = req.body
+  const { title, price, description, brand, category, color, origin, material, sexual, size} = req.body
   const serverUrl = process.env.URL_SERVER || 'http://localhost:5000'
   const thumb = serverUrl + "/products/" + req?.files?.thumb[0]?.filename
-  const images =  req.files?.images?.map((el) => serverUrl + "/products/" + el.filename)
-  if (!(title && price && description && brand && category && color))
+  const images = req.files?.images?.map((el) => serverUrl + "/products/" + el.filename)
+  const varriants = { 
+    color: [...new Set(color)].filter((el) => el !== ""), 
+    origin: [...new Set(origin)].filter((el) => el !== ""),
+    material: [...new Set(material)].filter((el) => el !== ""),
+    sexual: [...new Set(sexual)].filter((el) => el !== ""),
+    size: [...new Set(size)].filter((el) => el !== "")
+  }
+  if (!(title && price && description && brand && category && varriants))
     throw new Error("Missing inputs")
   req.body.slug = slugify(title)
   if (thumb) req.body.thumb = thumb
   if (images) req.body.images = images
+  req.body.varriants = varriants
   const newProduct = await Product.create(req.body)
   return res.status(200).json({
     success: newProduct ? true : false,
@@ -31,7 +39,7 @@ const getProduct = asyncHandler(async (req, res) => {
     },
   })
   return res.status(200).json({
-    success: product ? true : false,
+    success: product,
     productData: product ? product : "Cannot get product",
   })
 })
@@ -106,13 +114,11 @@ const getProducts = asyncHandler(async (req, res) => {
       if (varriants.length > 0) {
         // const minPrice = Math.min(...varriants.map((el) => el.price))
         // const maxPrice = Math.max(...varriants.map((el) => el.price))
-        const varriantsByColor = groupBy(varriants, "color")
-        const varriantsBySize = groupBy(varriants, "size")
+        // const varriantsByColor = groupBy(varriants, "color")
+        // const varriantsBySize = groupBy(varriants, "size")
         return {
           ...el._doc,
           price: varriants[0].price,
-          varriantsByColor,
-          varriantsBySize
         }
       }
       return el
