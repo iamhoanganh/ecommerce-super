@@ -13,8 +13,7 @@ import { Separator } from "@/components/ui/separator"
 
 export default function HomePage() {
     return (
-        <div className="w-full flex ">
-            <div className="max-w-screen-lg m-auto mt-6 w-full">
+        
                 <div className="w-main m-auto flex flex-col">
                     <div className="flex">
                         <div className="w-[20%] bg-red-100 flex flex-col justify-around items-center">
@@ -108,7 +107,5 @@ export default function HomePage() {
                         </Carousel>
                     </div>
                 </div>
-            </div>
-        </div>
     );
 }

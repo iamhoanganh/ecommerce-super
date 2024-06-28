@@ -21,10 +21,7 @@ export const ProductSchema = z.object({
   description: z.string(),
   brand: z.string(),
   thumb: z.string(),
-  price: z.object({
-    min: z.number(),
-    max: z.number()
-  }),
+  price: z.number(),
   category: z.string(),
   quantity: z.number(),
   sold: z.number(),
@@ -38,13 +35,13 @@ export const ProductSchema = z.object({
   varriantsByColor: z.record(z.array(VarriantSchema)),
   varriantsBySize: z.record(z.array(VarriantSchema)),
 })
+export type ProductType = z.TypeOf<typeof ProductSchema>
 
 export const ProductRes = z.object({
   counts: z.number(),
   success: z.boolean(),
   productData: ProductSchema,
 })
-
 export type ProductResType = z.TypeOf<typeof ProductRes>
 
 export const ProductListRes = z.object({

@@ -124,7 +124,7 @@ export default async function ProductPage({
                   />
                   <span className="flex flex-col">
                   {/*<span>{productData?.color}</span>*/}
-                  <span className="text-sm">{productData?.price.min}</span>
+                  <span className="text-sm">{productData?.price}</span>
                 </span>
                 </div>
                 {/*{productData?.varriants?.map((el) => (*/}

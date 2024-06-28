@@ -20,8 +20,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const cookieStore = cookies()
-  const sessionToken = cookieStore.get('sessionToken')
+  const cookieStore = cookies();
+  const sessionToken = cookieStore.get("sessionToken");
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
@@ -33,7 +33,13 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Header />
-          <AppProvider initialSessionToken={sessionToken?.value}>{children}</AppProvider>
+          <AppProvider initialSessionToken={sessionToken?.value}>
+            <div className="w-full flex ">
+              <main className="max-w-screen-lg m-auto mt-6 w-full">
+                {children}
+              </main>
+            </div>
+          </AppProvider>
           <Footer />
         </ThemeProvider>
       </body>
