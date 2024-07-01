@@ -1,13 +1,14 @@
 const Slide = require('../models/slide')
 const asyncHandler = require('express-async-handler')
+const serverUrl = process.env.URL_SERVER || 'http://localhost:5000'
 
 const createNewSlide = asyncHandler(async (req, res) => {
   if (!req?.file?.filename) throw new Error('Vui long gui hinh anh')
-  const serverUrl = process.env.URL_SERVER || 'http://localhost:5000'
-  const image = serverUrl + "/slides/" + req?.file?.filename
+  const image = "/slides/" + req?.file?.filename
   const allSlides = await Slide.find()
   if (allSlides.length >= process.env.LIMIT_SLIDES) throw new Error('So luong slide toi da la 5')
   const response = await Slide.create({image})
+  response.image = serverUrl + response.image
   return res.json({
     success: !!response,
     createdSlide: response ? response : 'Them moi slide thanh cong'
@@ -15,6 +16,7 @@ const createNewSlide = asyncHandler(async (req, res) => {
 })
 const getSlides = asyncHandler(async (req, res) => {
   const response = await Slide.find()
+  response.map(slide => slide.image = serverUrl + slide.image)
   return res.json({
     success: !!response,
     slides: response ? response : 'Khong the lay danh sach slide'

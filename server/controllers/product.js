@@ -3,14 +3,14 @@ const asyncHandler = require("express-async-handler")
 const slugify = require("slugify")
 const makeSKU = require("uniqid")
 const groupBy = require("../ultils/groupBy")
+const serverUrl = process.env.URL_SERVER || 'http://localhost:5000'
 
 const createProduct = asyncHandler(async (req, res) => {
   const { title, price, description, brand, category, color, origin, material, sexual, size} = req.body
-  const serverUrl = process.env.URL_SERVER || 'http://localhost:5000'
-  const thumb = serverUrl + "/products/" + req?.files?.thumb[0]?.filename
-  const images = req.files?.images?.map((el) => serverUrl + "/products/" + el.filename)
-  const varriants = { 
-    color: [...new Set(color)].filter((el) => el !== ""), 
+  const thumb = "/products/" + req?.files?.thumb[0]?.filename
+  const images = req.files?.images?.map((el) => "/products/" + el.filename)
+  const varriants = {
+    color: [...new Set(color)].filter((el) => el !== ""),
     origin: [...new Set(origin)].filter((el) => el !== ""),
     material: [...new Set(material)].filter((el) => el !== ""),
     sexual: [...new Set(sexual)].filter((el) => el !== ""),
@@ -22,11 +22,14 @@ const createProduct = asyncHandler(async (req, res) => {
   if (thumb) req.body.thumb = thumb
   if (images) req.body.images = images
   req.body.varriants = varriants
+  if (!req.body.percentDiscount) req.body.percentDiscount = parseFloat(+req.body.discount / +req.body.price * 100).toFixed(2)
   const newProduct = await Product.create(req.body)
+  newProduct.thumb = serverUrl + newProduct.thumb
+  newProduct.images = newProduct.images.map((el) => serverUrl + el)
   return res.status(200).json({
-    success: newProduct ? true : false,
+    success: !!newProduct,
     mes: newProduct ? "Created" : "Failed.",
-    data: newProduct,
+    productData: newProduct ? newProduct : "Cannot create product",
   })
 })
 const getProduct = asyncHandler(async (req, res) => {
@@ -38,8 +41,10 @@ const getProduct = asyncHandler(async (req, res) => {
       select: "firstname lastname avatar",
     },
   })
+  product.thumb = serverUrl + product.thumb
+  product.images = product.images.map((el) => serverUrl + el)
   return res.status(200).json({
-    success: product,
+    success: !!product,
     productData: product ? product : "Cannot get product",
   })
 })
@@ -108,42 +113,33 @@ const getProducts = asyncHandler(async (req, res) => {
   // Execute query
   // Số lượng sp thỏa mãn điều kiện !== số lượng sp trả về 1 lần gọi API
   queryCommand.exec(async (err, response) => {
-    const productsData = [...response]
-    const result = productsData.map((el) => {
-      const { varriants } = el
-      if (varriants.length > 0) {
-        // const minPrice = Math.min(...varriants.map((el) => el.price))
-        // const maxPrice = Math.max(...varriants.map((el) => el.price))
-        // const varriantsByColor = groupBy(varriants, "color")
-        // const varriantsBySize = groupBy(varriants, "size")
-        return {
-          ...el._doc,
-          price: varriants[0].price,
-        }
-      }
-      return el
-    })
     if (err) throw new Error(err.message)
     const counts = await Product.find(qr).countDocuments()
     return res.status(200).json({
-      success: response ? true : false,
+      success: !!response,
       counts,
-      products: response ? result : "Cannot get products",
+      products: response ? response : "Cannot get products",
     })
   })
 })
 const updateProduct = asyncHandler(async (req, res) => {
   const { pid } = req.params
   const files = req?.files
-  if (files?.thumb) req.body.thumb = files?.thumb[0]?.path
-  if (files?.images) req.body.images = files?.images?.map((el) => el.path)
+  const thumb = "/products/" + files?.thumb[0]?.filename
+  const images = files?.images?.map((el) => "/products/" + el.filename)
+  if (req.body.thumb) req.body.thumb = thumb
+  if (req.body.images) req.body.images = images
   if (req.body && req.body.title) req.body.slug = slugify(req.body.title)
   const updatedProduct = await Product.findByIdAndUpdate(pid, req.body, {
     new: true,
   })
+  if (!updatedProduct) throw new Error("Cannot update product")
+  updatedProduct.thumb = serverUrl + updatedProduct.thumb
+  updatedProduct.images = updatedProduct.images.map((el) => serverUrl + el)
   return res.status(200).json({
-    success: updatedProduct ? true : false,
+    success: !!updatedProduct,
     mes: updatedProduct ? "Updated." : "Cannot update product",
+    updatedProduct
   })
 })
 const deleteProduct = asyncHandler(async (req, res) => {
