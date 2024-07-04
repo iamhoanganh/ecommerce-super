@@ -117,19 +117,19 @@ const ManageProducts = () => {
       <table className="table-auto">
         <thead>
           <tr className="border bg-sky-900 text-white border-white">
-            <th className="text-center py-2">Order</th>
-            <th className="text-center py-2">Thumb</th>
-            <th className="text-center py-2">Title</th>
-            <th className="text-center py-2">Brand</th>
-            <th className="text-center py-2">Category</th>
-            <th className="text-center py-2">Price</th>
-            <th className="text-center py-2">Quantity</th>
-            <th className="text-center py-2">Sold</th>
-            <th className="text-center py-2">Color</th>
-            <th className="text-center py-2">Ratings</th>
-            <th className="text-center py-2">Varriants</th>
-            <th className="text-center py-2">UpdatedAt</th>
-            <th className="text-center py-2">Actions</th>
+            <th className="text-center py-2">TT</th>
+            <th className="text-center py-2">Ảnh</th>
+            <th className="text-center py-2">Tên</th>
+            <th className="text-center py-2">Hãng</th>
+            <th className="text-center py-2">Danh mục</th>
+            <th className="text-center py-2">Giá</th>
+            <th className="text-center py-2">Kho</th>
+            <th className="text-center py-2">SL Bán</th>
+            <th className="text-center py-2">Màu</th>
+            <th className="text-center py-2">Đánh giá</th>
+            <th className="text-center py-2">Loại</th>
+            <th className="text-center py-2">Cập nhật</th>
+            <th className="text-center py-2">Hành động</th>
           </tr>
         </thead>
         <tbody>
@@ -143,7 +143,7 @@ const ManageProducts = () => {
               </td>
               <td className="text-center py-2">
                 <img
-                  src={el.thumb}
+                  src={process.env.REACT_APP_SERVER_URL + el.thumb}
                   alt="thumb"
                   className="w-12 h-12 object-cover"
                 />
@@ -154,7 +154,7 @@ const ManageProducts = () => {
               <td className="text-center py-2">{el.price}</td>
               <td className="text-center py-2">{el.quantity}</td>
               <td className="text-center py-2">{el.sold}</td>
-              <td className="text-center py-2">{el.color}</td>
+              <td className="text-center py-2">{el.varriants.color}</td>
               <td className="text-center py-2">{el.totalRatings}</td>
               <td className="text-center py-2">{el?.varriants?.length || 0}</td>
               <td className="text-center py-2">

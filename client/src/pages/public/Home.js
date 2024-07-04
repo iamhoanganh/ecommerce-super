@@ -26,7 +26,7 @@ const Home = ({ navigate }) => {
           <DealDaily />
         </div>
         <div className="flex flex-col gap-5 pl-5 w-[75%] flex-auto">
-          <Banner />
+          {/* <Banner /> */}
           <BestSeller />
         </div>
       </div>

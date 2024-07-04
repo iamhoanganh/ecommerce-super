@@ -202,15 +202,15 @@ export const adminSidebar = [
   {
     id: 3,
     type: "PARENT",
-    text: "Manage products",
+    text: "Quản lý sản phẩm",
     icon: <TbBrandProducthunt size={20} />,
     submenu: [
       {
-        text: "Create product",
+        text: "Tạo sản phẩm",
         path: `/${path.ADMIN}/${path.CREATE_PRODUCTS}`,
       },
       {
-        text: "Manage products",
+        text: "Danh sách sản phẩm",
         path: `/${path.ADMIN}/${path.MANAGE_PRODUCTS}`,
       },
     ],
@@ -218,8 +218,15 @@ export const adminSidebar = [
   {
     id: 4,
     type: "SINGLE",
-    text: "Manage orders",
-    path: `/${path.ADMIN}/${path.MANAGE_ORDER}`,
+    text: "Quản lý slide",
+    path: `/${path.ADMIN}/${path.MANAGE_SLIDES}`,
+    icon: <RiBillLine size={20} />,
+  },
+  {
+    id: 5,
+    type: "SINGLE",
+    text: "Quản lý danh mục sản phẩm",
+    path: `/${path.ADMIN}/${path.MANAGE_CATEGORIES}`,
     icon: <RiBillLine size={20} />,
   },
 ]

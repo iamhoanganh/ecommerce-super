@@ -18,13 +18,11 @@ const UpdateProduct = ({ editProduct, render, setEditProduct }) => {
         thumb: null,
         images: []
     })
-
     useEffect(() => {
         reset({
             title: editProduct?.title || '',
             price: editProduct?.price || '',
             quantity: editProduct?.quantity || '',
-            color: editProduct?.color || '',
             category: editProduct?.category || '',
             brand: editProduct?.brand?.toLowerCase() || '',
         })
@@ -70,10 +68,14 @@ const UpdateProduct = ({ editProduct, render, setEditProduct }) => {
             if (data.category) data.category = categories?.find(el => el.title === data.category)?.title
             const finalPayload = { ...data, ...payload }
             finalPayload.thumb = data?.thumb?.length === 0 ? preview.thumb : data.thumb[0]
+            if (data.images.length === 0) delete finalPayload.thumb
             const formData = new FormData()
             for (let i of Object.entries(finalPayload)) formData.append(i[0], i[1])
             finalPayload.images = data.images?.length === 0 ? preview.images : data.images
-            for (let image of finalPayload.images) formData.append('images', image)
+            if (data.images.length === 0) delete finalPayload.images
+            if (data.images.length !== 0) {
+                for (let image of finalPayload.images) formData.append('images', image)
+            }
             dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }))
             const response = await apiUpdateProduct(formData, editProduct._id)
             dispatch(showModal({ isShowModal: false, modalChildren: null }))
@@ -129,17 +131,17 @@ const UpdateProduct = ({ editProduct, render, setEditProduct }) => {
                             placeholder='Quantity of new product'
                             type='number'
                         />
-                        <InputForm
-                            label='Color'
-                            register={register}
-                            errors={errors}
-                            id='color'
-                            validate={{
-                                required: 'Need fill this field'
-                            }}
-                            style='flex-auto'
-                            placeholder='color of new product'
-                        />
+                        {/*<InputForm*/}
+                        {/*    label='Color'*/}
+                        {/*    register={register}*/}
+                        {/*    errors={errors}*/}
+                        {/*    id='color'*/}
+                        {/*    validate={{*/}
+                        {/*        required: 'Need fill this field'*/}
+                        {/*    }}*/}
+                        {/*    style='flex-auto'*/}
+                        {/*    placeholder='color of new product'*/}
+                        {/*/>*/}
                     </div>
                     <div className='w-full my-6 flex gap-4'>
                         <Select
@@ -180,7 +182,7 @@ const UpdateProduct = ({ editProduct, render, setEditProduct }) => {
                         {errors['thumb'] && <small className='text-xs text-red-500'>{errors['thumb']?.message}</small>}
                     </div>
                     {preview.thumb && <div className='my-4'>
-                        <img src={preview.thumb} alt="thumbnail" className='w-[200px] object-contain' />
+                        <img src={process.env.REACT_APP_SERVER_URL + preview.thumb} alt="thumbnail" className='w-[200px] object-contain' />
                     </div>}
                     <div className='flex flex-col gap-2 mt-8'>
                         <label className='font-semibold' htmlFor="products">Upload images of product</label>
@@ -198,7 +200,7 @@ const UpdateProduct = ({ editProduct, render, setEditProduct }) => {
                                 key={idx}
                                 className='w-fit relative'
                             >
-                                <img src={el} alt="product" className='w-[200px] object-contain' />
+                                <img src={process.env.REACT_APP_SERVER_URL + el} alt="product" className='w-[200px] object-contain' />
                             </div>
                         ))}
                     </div>}
