@@ -19,7 +19,8 @@ var productSchema = new mongoose.Schema({
     },
     brand: {
         type: String,
-        required: true
+        required: true,
+        default: "No brand"
     },
     thumb: {
         type: String,
@@ -68,7 +69,7 @@ var productSchema = new mongoose.Schema({
          },
         origin: { type: Array },
         material: { type: Array },
-    }
+    },
 }, {
     timestamps: true
 });

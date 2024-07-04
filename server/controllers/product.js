@@ -9,6 +9,8 @@ const createProduct = asyncHandler(async (req, res) => {
   const { title, price, description, brand, category, color, origin, material, sexual, size} = req.body
   const thumb = "/products/" + req?.files?.thumb[0]?.filename
   const images = req.files?.images?.map((el) => "/products/" + el.filename)
+  if (!(title && price && description && category ))
+    throw new Error("Missing inputs")
   const varriants = {
     color: [...new Set(color)].filter((el) => el !== ""),
     origin: [...new Set(origin)].filter((el) => el !== ""),
@@ -16,12 +18,10 @@ const createProduct = asyncHandler(async (req, res) => {
     sexual: [...new Set(sexual)].filter((el) => el !== ""),
     size: [...new Set(size)].filter((el) => el !== "")
   }
-  if (!(title && price && description && brand && category && varriants))
-    throw new Error("Missing inputs")
   req.body.slug = slugify(title)
   if (thumb) req.body.thumb = thumb
   if (images) req.body.images = images
-  req.body.varriants = varriants
+  if (varriants) req.body.varriants = varriants
   if (!req.body.percentDiscount) req.body.percentDiscount = parseFloat(+req.body.discount / +req.body.price * 100).toFixed(2)
   const newProduct = await Product.create(req.body)
   newProduct.thumb = serverUrl + newProduct.thumb
@@ -125,10 +125,8 @@ const getProducts = asyncHandler(async (req, res) => {
 const updateProduct = asyncHandler(async (req, res) => {
   const { pid } = req.params
   const files = req?.files
-  const thumb = "/products/" + files?.thumb[0]?.filename
-  const images = files?.images?.map((el) => "/products/" + el.filename)
-  if (req.body.thumb) req.body.thumb = thumb
-  if (req.body.images) req.body.images = images
+  if (req.body.thumb) req.body.thumb = "/products/" + files?.thumb[0]?.filename
+  if (req.body.images) req.body.images = files?.images?.map((el) => "/products/" + el.filename)
   if (req.body && req.body.title) req.body.slug = slugify(req.body.title)
   const updatedProduct = await Product.findByIdAndUpdate(pid, req.body, {
     new: true,
@@ -214,30 +212,31 @@ const uploadImagesProduct = asyncHandler(async (req, res) => {
     updatedProduct: response ? response : "Cannot upload images product",
   })
 })
+const uploadImageDescription = asyncHandler(async (req, res) => {
+  if (!req.files) throw new Error("Missing inputs")
+
+})
 const addVarriant = asyncHandler(async (req, res) => {
   const { pid } = req.params
-  const { title, price, color } = req.body
-  const thumb = req?.files?.thumb[0]?.path
-  const images = req.files?.images?.map((el) => el.path)
-  if (!(title && price && color)) throw new Error("Missing inputs")
+  const { title, color, origin, material, sexual, size } = req.body
+  if (!(title, color, origin, material, sexual, size)) throw new Error("Missing inputs")
+  const varriants = {
+    color: [...new Set(color)].filter((el) => el !== ""),
+    origin: [...new Set(origin)].filter((el) => el !== ""),
+    material: [...new Set(material)].filter((el) => el !== ""),
+    sexual: [...new Set(sexual)].filter((el) => el !== ""),
+    size: [...new Set(size)].filter((el) => el !== "")
+  }
+  console.log("varriants", varriants)
   const response = await Product.findByIdAndUpdate(
     pid,
     {
-      $push: {
-        varriants: {
-          color,
-          price,
-          title,
-          thumb,
-          images,
-          sku: makeSKU().toUpperCase(),
-        },
-      },
+      varriants
     },
     { new: true }
   )
   return res.status(200).json({
-    success: response ? true : false,
+    success: !!response,
     mes: response ? "Added varriant." : "Cannot upload images product",
   })
 })
