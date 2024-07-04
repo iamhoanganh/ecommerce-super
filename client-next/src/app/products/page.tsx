@@ -369,10 +369,10 @@ export default async function ProductListPage() {
           </SelectContent>
         </Select>
       </div>
-      {products.map((product) => (
-          <ProductCard key={product._id} product={product}/>
-      ))}
-      
+      {/*{products.map((product) => (*/}
+      {/*    <ProductCard key={product._id} product={product}/>*/}
+      {/*))}*/}
+
       <Pagination>
         <PaginationContent>
           <PaginationItem>

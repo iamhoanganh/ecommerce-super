@@ -8,11 +8,12 @@ export const CreateProductBody = z.object({
 })
 
 export type CreateProductBodyType = z.TypeOf<typeof CreateProductBody>
-export const VarriantSchema = z.object({
-  color: z.string(),
-  size: z.string(),
-  price: z.number(),
-  _id: z.string(),
+export const VariantSchema = z.object({
+  color: z.array(z.string()),
+  size: z.array(z.string()),
+  sexual: z.array(z.string()),
+  origin: z.array(z.string()),
+  material: z.array(z.string()),
 })
 export const ProductSchema = z.object({
   _id: z.string(),
@@ -22,18 +23,20 @@ export const ProductSchema = z.object({
   brand: z.string(),
   thumb: z.string(),
   price: z.number(),
+  discount: z.number(),
+  percentDiscount: z.number(),
   category: z.string(),
   quantity: z.number(),
   sold: z.number(),
   images: z.array(z.string()),
   totalRatings: z.number(),
-  varriants: z.array(VarriantSchema),
+  varriants: VariantSchema,
   ratings: z.array(z.string()),
   createdAt: z.string(),
   updatedAt: z.string(),
   __v: z.number(),
-  varriantsByColor: z.record(z.array(VarriantSchema)),
-  varriantsBySize: z.record(z.array(VarriantSchema)),
+  // varriantsByColor: z.record(z.array(VariantSchema)),
+  // varriantsBySize: z.record(z.array(VariantSchema)),
 })
 export type ProductType = z.TypeOf<typeof ProductSchema>
 

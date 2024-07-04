@@ -25,3 +25,17 @@ export const handleErrorApi = ({error, setError, duration} : {error: any, setErr
 export const normalizePath = (path: string) => {
   return path.startsWith("/") ? path.slice(1) : path
 }
+export const slugify = (...args: (string | number)[]): string => {
+const value = args.join(' ')
+
+  return value
+      .normalize('NFD') // split an accented letter in the base letter and the acent
+      .replace(/[\u0300-\u036f]/g, '') // remove all previously split accents
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9 ]/g, '') // remove all chars not letters, numbers and spaces (to be replaced)
+      .replace(/\s+/g, '-') // separator
+}
+export const formatPrice = (price: number) => {
+  return price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }).replaceAll(".", ",")
+}
