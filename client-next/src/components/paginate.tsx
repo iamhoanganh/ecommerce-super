@@ -9,6 +9,7 @@ import {
     PaginationLink, PaginationNext,
     PaginationPrevious
 } from "@/components/ui/pagination";
+import {PAGE_SIZE} from "@/lib/constant";
 
 function Paginate({productLength} : {productLength: number}) {
     const searchParams = useSearchParams()

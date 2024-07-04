@@ -3,22 +3,23 @@ import React, { memo } from 'react'
 
 const Footer = () => {
     return (
-        <div className='w-full '>
-            <div className='h-[307px] w-full bg-gray-900 flex items-center justify-center text-white text-[13px]'>
-                <div className='w-full flex gap-x-2 max-w-screen-lg'>
+            <footer className='h-[270px] w-full bg-gray-900 flex items-center justify-center text-white text-[13px] p-3'>
+                <div className='w-full flex flex-col gap-x-2 max-w-screen-lg gap-y-4 md:flex-row'>
                     <div className='flex-2 flex flex-col gap-2'>
                         <h3 className='mb-[20px] text-[15px] font-medium border-l-2 border-main pl-[15px]'>Liên hệ</h3>
-                        <span>
-                            <span>Địa chỉ: </span>
+                        <span className="text-sm pl-5">
+                            <b>Địa chỉ: </b>
                             <span className='opacity-70'>Lô 10 Liền kề 21 Khu Đô thị Văn Khê - Hà Đông - Hà Nội</span>
                         </span>
-                        <span>
-                            <span>Số điện thoại: </span>
-                            <span className='opacity-70'>0869246226 hoặc 0942002001</span>
+                        <span className="text-sm pl-5">
+                            <b>Điện thoại: </b>
+                            <a href="tel:0869246226" className='opacity-70'>0869246226</a>
+                            <span className='opacity-70'> hoặc </span>
+                            <a href="tel:0942002001" className='opacity-70'>0942002001</a>
                         </span>
-                        <span>
-                            <span>Email: </span>
-                            <span className='opacity-70'>cualuoikimphong@gmail.com</span>
+                        <span className="text-sm pl-5">
+                            <b>Email: </b>
+                            <a href="mailto:cualuoikimphong@gmail.com" className='opacity-70'>cualuoikimphong@gmail.com</a>
                         </span>
 
                     </div>
@@ -42,11 +43,10 @@ const Footer = () => {
 
                     {/*</div>*/}
                     <div className='flex-1 flex flex-col gap-2'>
-                        <h3 className='mb-[20px] text-[15px] font-medium border-l-2 border-main pl-[15px]'>#DIGITALWORLDSTORE</h3>
+                        <h3 className='mb-[20px] text-[15px] font-medium border-l-2 border-main pl-[15px]'>#Chợ đồ cũ tốt</h3>
                     </div>
                 </div>
-            </div>
-        </div>
+            </footer>
     )
 }
 
