@@ -29,7 +29,7 @@ function ImageSelection({imageData}: ImageSelectionProps) {
                 {/*      },*/}
                 {/*    }}*/}
                 {/*/>*/}
-                <Image className="h-[450px] w-[454px] object-cover"
+                <Image className="w-full max-h-[300px] object-cover sm:max-h-[450px]"
                        src={currentImage}
                        alt={imageData?.title || "alt image"} width={454} height={450}/>
             </figure>

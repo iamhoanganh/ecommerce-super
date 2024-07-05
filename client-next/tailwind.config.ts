@@ -75,6 +75,9 @@ const config = {
       minHeight: {
         '128': '32rem',
         'chill': "calc(100vh - 66px - 270px - 3rem)",
+      },
+      fontSize: {
+        'xxs': '.6rem',
       }
     },
   },
