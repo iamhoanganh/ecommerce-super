@@ -21,7 +21,7 @@ const nextConfig = {
             },
             {
                 protocol: 'https',
-                hostname: 'ecommerce-super-1.onrender.com',
+                hostname: 'orca-app-lzejy.ondigitalocean.app',
                 port: '',
                 pathname: '/**',
             },
