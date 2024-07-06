@@ -21,7 +21,7 @@ const nextConfig = {
             },
             {
                 protocol: 'https',
-                hostname: 'orca-app-lzejy.ondigitalocean.app',
+                hostname: 'dolphin-app-xjwi7.ondigitalocean.app',
                 port: '',
                 pathname: '/**',
             },
