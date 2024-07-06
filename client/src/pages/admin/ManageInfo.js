@@ -1,8 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import moment from 'moment'
-import { InputField, Pagination, InputForm, Select, Button } from 'components'
-import useDebounce from 'hooks/useDebounce'
-import { useSearchParams } from 'react-router-dom'
+import React from 'react'
+import { InputForm, Button } from 'components'
+
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import Swal from 'sweetalert2'
@@ -10,31 +8,35 @@ import clsx from 'clsx'
 import {apiGetFooter, apiUpdateFooter} from "../../apis/slide";
 
 const ManageInfo = () => {
-    const [footerInfo, setFooterInfo] = useState(null)
-    const [queries, setQueries] = useState({
-        q: ""
-    })
-    const [update, setUpdate] = useState(false)
-    const [params] = useSearchParams()
-    const fetchCategories = async (params) => {
-        const response = await apiGetFooter({ ...params, limit: process.env.REACT_APP_LIMIT })
-        if (response.success) setFooterInfo(response.footer[0])
-    }
     const { handleSubmit, register, formState: { errors }, reset } = useForm({
-        email: footerInfo?.email,
-        address: footerInfo?.address,
-        phoneNumber: footerInfo?.phoneNumber,
+        defaultValues: async () => {
+            const response = await apiGetFooter()
+            const footerInfo = response.footer[0]
+            if (response.success) {
+                return {
+                    email: footerInfo.email,
+                    phoneNumber: footerInfo.phoneNumber,
+                    address: footerInfo.address,
+                    youtubeLink: footerInfo.youtubeLink,
+                    facebookLink: footerInfo.facebookLink,
+                    tiktokLink: footerInfo.tiktokLink,
+                    latLong: footerInfo.latLong,
+                    id: footerInfo._id
+                }
+            }
+            else return {
+                email: '',
+                phoneNumber: '',
+                address: '',
+                youtubeLink: '',
+                facebookLink: '',
+                tiktokLink: '',
+                id: "",
+                latLong: ""
+            }
+        }
     })
-    const render = useCallback(() => {
-        setUpdate(!update)
-    }, [update])
-    const queriesDebounce = useDebounce(queries.q, 800)
 
-    useEffect(() => {
-        const queries = Object.fromEntries([...params])
-        if (queriesDebounce) queries.q = queriesDebounce
-        fetchCategories(queries)
-    }, [queriesDebounce, params, update])
     const handleUpdateFooter = (data) => {
         Swal.fire({
             title: 'Cập nhật thông tin cửa hàng',
@@ -42,9 +44,17 @@ const ManageInfo = () => {
             showCancelButton: true
         }).then(async (result) => {
             if (result.isConfirmed) {
-                const response = await apiUpdateFooter(data, footerInfo?._id)
+                const payload = {
+                    email: data.email,
+                    phoneNumber: data.phoneNumber,
+                    address: data.address,
+                    youtubeLink: data.youtubeLink,
+                    facebookLink: data.facebookLink,
+                    tiktokLink: data.tiktokLink,
+                    latLong: data.latLong
+                }
+                const response = await apiUpdateFooter(payload, data.id)
                 if (response.success) {
-                    render()
                     toast.success("Cập nhật thông tin cửa hàng thành công.")
                 } else toast.error("Cập nhật thông tin cửa hàng thất bại.")
             }
@@ -62,7 +72,6 @@ const ManageInfo = () => {
                         register={register}
                         fullWidth
                         errors={errors}
-                        defaultValue={footerInfo?.email}
                         id={'email'}
                         validate={{required: 'Require fill.'}}
                     />
@@ -71,7 +80,6 @@ const ManageInfo = () => {
                         register={register}
                         fullWidth
                         errors={errors}
-                        defaultValue={footerInfo?.phoneNumber}
                         id={'phoneNumber'}
                         validate={{required: 'Require fill.'}}
                     />
@@ -80,8 +88,38 @@ const ManageInfo = () => {
                         register={register}
                         fullWidth
                         errors={errors}
-                        defaultValue={footerInfo?.address}
                         id={'address'}
+                        validate={{required: 'Require fill.'}}
+                    />
+                    <InputForm
+                        label="Đường link Youtube"
+                        register={register}
+                        fullWidth
+                        errors={errors}
+                        id={'youtubeLink'}
+                        validate={{required: 'Require fill.'}}
+                    />
+                    <InputForm
+                        label="Đường link Facebook"
+                        register={register}
+                        fullWidth
+                        errors={errors}
+                        id={'facebookLink'}
+                        validate={{required: 'Require fill.'}}
+                    />
+                    <InputForm
+                        label="Đường link Tiktok"
+                        register={register}
+                        fullWidth
+                        errors={errors}
+                        id={'tiktokLink'}
+                    />
+                    <InputForm
+                        label="Toạ độ cửa hàng"
+                        register={register}
+                        fullWidth
+                        errors={errors}
+                        id={'latLong'}
                         validate={{required: 'Require fill.'}}
                     />
                     <div className='w-full flex justify-end'>
