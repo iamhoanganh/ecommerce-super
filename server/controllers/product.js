@@ -3,7 +3,6 @@ const asyncHandler = require("express-async-handler")
 const slugify = require("slugify")
 const makeSKU = require("uniqid")
 const groupBy = require("../ultils/groupBy")
-const serverUrl = process.env.URL_SERVER || 'http://localhost:5000'
 
 const createProduct = asyncHandler(async (req, res) => {
   const { title, price, description, brand, category, color, origin, material, sexual, size} = req.body
@@ -41,6 +40,7 @@ const getProduct = asyncHandler(async (req, res) => {
       select: "firstname lastname avatar",
     },
   })
+  const serverUrl = `${req.protocol}://${req.get('host')}`
   product.thumb = serverUrl + product.thumb
   product.images = product.images.map((el) => serverUrl + el)
   return res.status(200).json({
@@ -132,6 +132,7 @@ const updateProduct = asyncHandler(async (req, res) => {
     new: true,
   })
   if (!updatedProduct) throw new Error("Cannot update product")
+  const serverUrl = `${req.protocol}://${req.get('host')}`
   updatedProduct.thumb = serverUrl + updatedProduct.thumb
   updatedProduct.images = updatedProduct.images.map((el) => serverUrl + el)
   return res.status(200).json({
