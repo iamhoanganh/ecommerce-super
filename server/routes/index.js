@@ -8,6 +8,7 @@ const coupon = require('./coupon')
 const order = require('./order')
 const image = require('./image')
 const slide = require('./slide')
+const footer = require('./footer')
 const { notFound, errHandler } = require('../middlewares/errHandler')
 
 const initRoutes = (app) => {
@@ -20,6 +21,7 @@ const initRoutes = (app) => {
     app.use('/api/coupon', coupon)
     app.use('/api/order', order)
     app.use('/api/slide', slide)
+    app.use('/api/footer', footer)
     app.use('/api/uploadImage', image)
 
 

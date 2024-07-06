@@ -19,6 +19,12 @@ const nextConfig = {
                 port: '',
                 pathname: '/s/files/**',
             },
+            {
+                protocol: 'https',
+                hostname: 'ecommerce-super-1.onrender.com',
+                port: '',
+                pathname: '/**',
+            },
         ],
     },
 };

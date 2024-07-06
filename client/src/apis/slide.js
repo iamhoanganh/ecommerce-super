@@ -23,3 +23,15 @@ export const apiUploadImage = (data) =>
         method: "post",
         data,
     })
+export const apiGetFooter = (params) =>
+    axios({
+        url: "/footer/",
+        method: "get",
+        params,
+    })
+export const apiUpdateFooter = (data, uid) =>
+    axios({
+        url: "/footer/" + uid,
+        method: "put",
+        data,
+    })

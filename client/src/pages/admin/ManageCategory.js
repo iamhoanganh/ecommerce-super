@@ -1,6 +1,4 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { apiGetUsers, apiUpdateUser, apiDeleteUser } from 'apis/user'
-import { roles, blockStatus } from 'ultils/contants'
 import moment from 'moment'
 import { InputField, Pagination, InputForm, Select, Button } from 'components'
 import useDebounce from 'hooks/useDebounce'
@@ -72,7 +70,6 @@ const ManageCategory = () => {
             }
         })
     }
-    console.log("categories", categories)
     return (
         <div className={clsx('w-full', editElm && 'pl-16')}>
             <h1 className='h-[75px] flex justify-between items-center text-3xl font-bold px-4 border-b'>

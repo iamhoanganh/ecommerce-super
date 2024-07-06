@@ -61,6 +61,7 @@ const Login = () => {
             } else {
                 const rs = await apiLogin(data)
                 if (rs.success) {
+                    console.log("user data", rs.userData)
                     dispatch(login({ isLoggedIn: true, token: rs.accessToken, userData: rs.userData }))
                     searchParams.get('redirect') ? navigate(searchParams.get('redirect')) : navigate(`/${path.ADMIN}/${path.DASHBOARD}`)
                 } else Swal.fire('Oops!', rs.mes, 'error')

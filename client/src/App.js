@@ -38,6 +38,7 @@ import { Cart, Modal } from "components"
 import { showCart } from "store/app/appSlice"
 import ManageSlides from "./pages/admin/ManageSlides";
 import ManageCategory from "./pages/admin/ManageCategory";
+import ManageInfo from "./pages/admin/ManageInfo";
 
 function App() {
   const dispatch = useDispatch()
@@ -81,6 +82,7 @@ function App() {
           <Route path={path.CREATE_PRODUCTS} element={<CreateProducts />} />
           <Route path={path.MANAGE_SLIDES} element={<ManageSlides />} />
           <Route path={path.MANAGE_CATEGORIES} element={<ManageCategory />} />
+          <Route path={path.MANAGE_INFO} element={<ManageInfo />} />
         </Route>
         {/*<Route path={path.MEMBER} element={<MemberLayout />}>*/}
         {/*  <Route path={path.PERSONAL} element={<Personal />} />*/}

@@ -229,6 +229,13 @@ export const adminSidebar = [
     path: `/${path.ADMIN}/${path.MANAGE_CATEGORIES}`,
     icon: <RiBillLine size={20} />,
   },
+  {
+    id: 6,
+    type: "SINGLE",
+    text: "Quản lý thông tin cửa hàng",
+    path: `/${path.ADMIN}/${path.MANAGE_INFO}`,
+    icon: <RiBillLine size={20} />,
+  },
 ]
 export const memberSidebar = [
   {

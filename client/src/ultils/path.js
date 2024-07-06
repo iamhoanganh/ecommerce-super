@@ -23,6 +23,7 @@ const path = {
     MANAGE_SLIDES: 'manage-slides',
     CREATE_PRODUCTS: 'create-products',
     MANAGE_CATEGORIES: 'manage-categories',
+    MANAGE_INFO: 'manage-info',
 
 
     // Member
