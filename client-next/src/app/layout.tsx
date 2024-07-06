@@ -35,7 +35,7 @@ export default function RootLayout({
           <AppProvider initialSessionToken={sessionToken?.value}>
             <Header />
             {/*<div className="w-full flex ">*/}
-              <main className="max-w-screen-lg m-auto my-6 w-full px-3 lg:px-0 min-h-chill">
+              <main className="max-w-screen-lg m-auto my-6 w-full px-3 lg:px-0 min-h-chill pt-[80px]">
                 {children}
               </main>
             {/*</div>*/}

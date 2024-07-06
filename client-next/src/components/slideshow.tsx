@@ -38,7 +38,7 @@ const Slideshow = ({slides}: {slides: SlideType[]}) => {
                         width={800}
                         height={400}
                         alt="banner"
-                        className='h-[250px] w-full object-cover sm:h-[400px]'
+                        className='w-full object-cover'
                     />
                 </CarouselItem>
             ))}

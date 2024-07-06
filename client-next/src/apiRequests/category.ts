@@ -28,6 +28,10 @@ export type FooterType = {
     "address": string,
     "email": string,
     "phoneNumber": string,
+    "facebookLink": string,
+    "youtubeLink": string,
+    "tiktokLink": string,
+    "latLong": string,
     "createdAt": string,
     "updatedAt": string,
 }
