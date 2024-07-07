@@ -30,7 +30,11 @@ const Slideshow = ({slides}: {slides: SlideType[]}) => {
         })
     }, [api])
     return (
-    <Carousel className="w-full" setApi={setApi}>
+    <Carousel plugins={[
+        Autoplay({
+            delay: 2000,
+        }),
+    ]} className="w-full" setApi={setApi}>
         <CarouselContent>
             {slides.map((_, index) => (
                 <CarouselItem key={_._id}>

@@ -31,6 +31,7 @@ export type FooterType = {
     "facebookLink": string,
     "youtubeLink": string,
     "tiktokLink": string,
+    "chototLink": string,
     "latLong": string,
     "createdAt": string,
     "updatedAt": string,

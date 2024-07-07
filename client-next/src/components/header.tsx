@@ -22,7 +22,7 @@ export default async function Header() {
     const {payload: {prodCategories}} = await categoryApiRequest.getCategoriesList()
 
     return (
-        <header className="border-b-2 px-3 fixed top-0 left-0 right-0 bg-white z-50">
+        <header className="border-b-2 px-3 fixed top-0 left-0 right-0 bg-white z-50 border-amber-500">
             <div className='w-main flex items-center justify-between h-[80px] max-w-screen-lg m-auto'>
                 <Sheet>
                     <SheetTrigger className="pl-2 sm:hidden">

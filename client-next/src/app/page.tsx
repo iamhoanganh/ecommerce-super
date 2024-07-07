@@ -22,7 +22,7 @@ export default async function HomePage() {
     return (
         <div className="w-main m-auto flex flex-col">
             <div className="flex gap-x-3">
-                <nav className="basis-1/5 flex-col justify-between items-center hidden sm:flex border-r-2">
+                <nav className="basis-1/5 flex-col justify-between items-center hidden sm:flex border-r-2 border-amber-500">
                     <span className="px-2 py-3 bg-primary text-white w-full text-center font-semibold">DANH MỤC SẢN PHẨM</span>
                     {prodCategories.map((category) =>
                         <NavLink className="py-5 px-10" key={category._id} href={`/products/?category=${category.title}`} name={category.title}/>
@@ -32,11 +32,11 @@ export default async function HomePage() {
                     <Slideshow slides={slides}/>
                 </div>
             </div>
-            <Separator className="my-4 bg-amber-500"/>
+            <Separator className="my-4 bg-amber-500 h-0.5"/>
             <CarouselProducts products={newProducts} title="Sản phẩm mới" hrefButton={"products/?sort=-createdAt&limit=12"} />
-            <Separator className="my-4 bg-amber-500"/>
+            <Separator className="my-4 bg-amber-500 h-0.5"/>
             <CarouselProducts products={salesProducts} title="Sản phẩm giảm giá" hrefButton={"products/?sort=-percentDiscount&limit=12"} />
-            <Separator className="my-4 bg-amber-500"/>
+            <Separator className="my-4 bg-amber-500 h-0.5"/>
             <CarouselProducts products={soldProducts} title="Sản phẩm bán chạy, hot" hrefButton={"products/?sort=-sold&limit=12"} />
         </div>
     );

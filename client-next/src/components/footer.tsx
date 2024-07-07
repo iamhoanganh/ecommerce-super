@@ -2,12 +2,14 @@ import React, { memo } from 'react'
 import categoryApiRequest from "@/apiRequests/category";
 import Link from "next/link";
 import { FaYoutube, FaFacebook, FaTiktok } from "react-icons/fa6";
+import chototLogo from '@/../public/chotot.png';
+import Image from "next/image";
 
 
 
 const Footer = async () => {
     const {payload: {footer}} = await categoryApiRequest.getFooterInfo()
-    const {address, email, phoneNumber, facebookLink, youtubeLink,tiktokLink , latLong, } = footer[0]
+    const {address, email, phoneNumber, facebookLink, youtubeLink,tiktokLink , latLong,chototLink } = footer[0]
     const [phone1, phone2] = phoneNumber.split(' hoặc ')
     return (
             <footer className=' min-h-[207px] w-full bg-gray-900 flex items-center justify-center text-white text-[13px] p-3 py-10'>
@@ -41,6 +43,9 @@ const Footer = async () => {
                             </Link>}
                             {tiktokLink && <Link href={tiktokLink} className="text-md">
                                 <FaTiktok size={25}/>
+                            </Link>}
+                            {chototLink && <Link href={chototLink} className="text-md">
+                                <Image src={chototLogo} alt={"logo-chotot"} width={25} height={25} />
                             </Link>}
                         </div>
                     </div>

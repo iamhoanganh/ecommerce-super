@@ -20,6 +20,7 @@ const ManageInfo = () => {
                     youtubeLink: footerInfo.youtubeLink,
                     facebookLink: footerInfo.facebookLink,
                     tiktokLink: footerInfo.tiktokLink,
+                    chototLink: footerInfo.chototLink,
                     latLong: footerInfo.latLong,
                     id: footerInfo._id
                 }
@@ -31,6 +32,7 @@ const ManageInfo = () => {
                 youtubeLink: '',
                 facebookLink: '',
                 tiktokLink: '',
+                chototLink: '',
                 id: "",
                 latLong: ""
             }
@@ -51,6 +53,7 @@ const ManageInfo = () => {
                     youtubeLink: data.youtubeLink,
                     facebookLink: data.facebookLink,
                     tiktokLink: data.tiktokLink,
+                    chototLink: data.tiktokLink,
                     latLong: data.latLong
                 }
                 const response = await apiUpdateFooter(payload, data.id)
@@ -113,6 +116,14 @@ const ManageInfo = () => {
                         fullWidth
                         errors={errors}
                         id={'tiktokLink'}
+                    />
+                    <InputForm
+                        label="Đường link Chotot"
+                        register={register}
+                        fullWidth
+                        errors={errors}
+                        id={'chototLink'}
+                        validate={{required: 'Require fill.'}}
                     />
                     <InputForm
                         label="Toạ độ cửa hàng"

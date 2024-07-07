@@ -53,12 +53,12 @@ export default async function ProductPage({params}: {
                     { varriants.origin.length !== 0 && <VariantSelect title="Nguồn gốc" options={varriants.origin}/> }
                 </div>
             </section>
-            <Separator className="my-4 bg-amber-500"/>
+            <Separator className="my-4 bg-amber-500 h-0.5"/>
             <article className="px-2 md: px-4">
                 <h2 className="text-xl font-semibold">Thông tin sản phẩm</h2>
                 <div className="">{parse(productData.description)}</div>
             </article>
-            <Separator className="my-4 bg-amber-500"/>
+            <Separator className="my-4 bg-amber-500 h-0.5"/>
             <aside>
                 <CarouselProducts products={relativeProducts} title="Sản phẩm bán tương tự"
                                   hrefButton={"products/?sort=-sold&limit=12"} showAllButton={false}/>
