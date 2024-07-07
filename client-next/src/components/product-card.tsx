@@ -7,8 +7,7 @@ import Link from "next/link";
 import {formatPrice} from "@/lib/utils";
 
 const ProductCart = ({ product } : {product: ProductType}) => {
-    const apiString = envConfig.NEXT_PUBLIC_API_URL.slice(0, -4)
-    // console.log("product", product)
+    const apiString = envConfig.NEXT_PUBLIC_API_URL
     return (
         <Link href={"/products/" + product._id}>
             <Card className='flex flex-col items-center'>

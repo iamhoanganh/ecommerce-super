@@ -76,11 +76,10 @@ const request = async <Response>(
 
     const baseUrl =
         options?.baseUrl === undefined
-            ? envConfig.NEXT_PUBLIC_API_URL
+            ? envConfig.NEXT_PUBLIC_API_URL+ '/api'
             : options.baseUrl
 
     const fullUrl = url.startsWith('/') ? `${baseUrl}${url}` : `${baseUrl}/${url}`
-
     const res = await fetch(fullUrl, {
         ...options,
         headers: {

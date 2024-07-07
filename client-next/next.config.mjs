@@ -25,6 +25,12 @@ const nextConfig = {
                 port: '',
                 pathname: '/**',
             },
+            {
+                protocol: 'http',
+                hostname: 'dolphin-app-xjwi7.ondigitalocean.app',
+                port: '',
+                pathname: '/**',
+            },
         ],
     },
 };

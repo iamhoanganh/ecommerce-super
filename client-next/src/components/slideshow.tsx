@@ -11,6 +11,7 @@ import {
 import slider2 from "../../public/slider-2.jpg"
 import Autoplay from "embla-carousel-autoplay";
 import {SlideType} from "@/apiRequests/category";
+import envConfig from "@/config";
 
 const Slideshow = ({slides}: {slides: SlideType[]}) => {
     const [api, setApi] = React.useState<CarouselApi>()
@@ -34,7 +35,7 @@ const Slideshow = ({slides}: {slides: SlideType[]}) => {
             {slides.map((_, index) => (
                 <CarouselItem key={_._id}>
                     <Image
-                        src={_.image}
+                        src={envConfig.NEXT_PUBLIC_API_URL + _.image}
                         width={800}
                         height={400}
                         alt="banner"
