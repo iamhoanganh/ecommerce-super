@@ -60,6 +60,7 @@ function App() {
       )}
       {isShowModal && <Modal>{modalChildren}</Modal>}
       <Routes>
+        <Route path={'/'} element={<Login />} />
         {/*<Route path={path.CHECKOUT} element={<Checkout />} />*/}
         {/*<Route path={path.PUBLIC} element={<Public />}>*/}
         {/*  <Route path={path.HOME} element={<Home />} />*/}
