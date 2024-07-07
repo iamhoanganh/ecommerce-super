@@ -7,8 +7,8 @@ const createNewSlide = asyncHandler(async (req, res) => {
   const allSlides = await Slide.find()
   if (allSlides.length >= process.env.LIMIT_SLIDES) throw new Error('So luong slide toi da la 5')
   const response = await Slide.create({image})
-  const serverUrl = `${req.protocol}://${req.get('host')}`
-  response.image = serverUrl + response.image
+  // const serverUrl = `${req.protocol}://${req.get('host')}`
+  // response.image = serverUrl + response.image
   return res.json({
     success: !!response,
     createdSlide: response ? response : 'Them moi slide thanh cong'
@@ -16,8 +16,8 @@ const createNewSlide = asyncHandler(async (req, res) => {
 })
 const getSlides = asyncHandler(async (req, res) => {
   const response = await Slide.find()
-  const serverUrl = `${req.protocol}://${req.get('host')}`
-  response.map(slide => slide.image = serverUrl + slide.image)
+  // const serverUrl = `${req.protocol}://${req.get('host')}`
+  // response.map(slide => slide.image = serverUrl + slide.image)
   return res.json({
     success: !!response,
     slides: response ? response : 'Khong the lay danh sach slide'

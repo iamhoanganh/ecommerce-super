@@ -23,8 +23,8 @@ const createProduct = asyncHandler(async (req, res) => {
   if (varriants) req.body.varriants = varriants
   if (!req.body.percentDiscount) req.body.percentDiscount = parseFloat(+req.body.discount / +req.body.price * 100).toFixed(2)
   const newProduct = await Product.create(req.body)
-  newProduct.thumb = serverUrl + newProduct.thumb
-  newProduct.images = newProduct.images.map((el) => serverUrl + el)
+  // newProduct.thumb = serverUrl + newProduct.thumb
+  // newProduct.images = newProduct.images.map((el) => serverUrl + el)
   return res.status(200).json({
     success: !!newProduct,
     mes: newProduct ? "Created" : "Failed.",
@@ -40,9 +40,10 @@ const getProduct = asyncHandler(async (req, res) => {
       select: "firstname lastname avatar",
     },
   })
-  const serverUrl = `${req.protocol}://${req.get('host')}`
-  product.thumb = serverUrl + product.thumb
-  product.images = product.images.map((el) => serverUrl + el)
+  // const serverUrl = `${req.protocol}://${req.get('host')}`
+  // product.thumb = serverUrl + product.thumb
+  // product.images = product.images.map((el) => serverUrl + el)
+  console.log("product", product)
   return res.status(200).json({
     success: !!product,
     productData: product ? product : "Cannot get product",
@@ -132,9 +133,9 @@ const updateProduct = asyncHandler(async (req, res) => {
     new: true,
   })
   if (!updatedProduct) throw new Error("Cannot update product")
-  const serverUrl = `${req.protocol}://${req.get('host')}`
-  updatedProduct.thumb = serverUrl + updatedProduct.thumb
-  updatedProduct.images = updatedProduct.images.map((el) => serverUrl + el)
+  // const serverUrl = `${req.protocol}://${req.get('host')}`
+  // updatedProduct.thumb = serverUrl + updatedProduct.thumb
+  // updatedProduct.images = updatedProduct.images.map((el) => serverUrl + el)
   return res.status(200).json({
     success: !!updatedProduct,
     mes: updatedProduct ? "Updated." : "Cannot update product",
