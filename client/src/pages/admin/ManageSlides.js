@@ -72,7 +72,6 @@ const ManageSlides = () => {
             toast.success(response.mes)
         } else toast.error(response.mes)
     }
-    console.log("slides", slides)
     return (
         <div className={clsx('w-full', editElm && 'pl-16')}>
             <h1 className='h-[75px] flex justify-between items-center text-3xl font-bold px-4 border-b'>

@@ -29,7 +29,6 @@ const CustomizeVarriants = ({ customizeVarriant, setCustomizeVarriant, render })
     // const handleAddVarriant = async (data) => {
     //     // convert data to form data
     //     const arrayData = Object.entries(data)
-    //     console.log("arrayData", arrayData)
     //
     //     // if (data.color === customizeVarriant.color) Swal.fire('Oops!', 'Color not changed', 'info')
     //     // else {

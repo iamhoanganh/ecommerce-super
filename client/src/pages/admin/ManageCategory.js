@@ -47,7 +47,6 @@ const ManageCategory = () => {
             ...data,
             brand: data.brand.split(','),
         }
-        console.log("payload", payload)
         const response = await apiUpdateCategory(payload, editElm._id)
         if (response.success) {
             setEditElm(null)

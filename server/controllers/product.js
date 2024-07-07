@@ -43,7 +43,6 @@ const getProduct = asyncHandler(async (req, res) => {
   // const serverUrl = `${req.protocol}://${req.get('host')}`
   // product.thumb = serverUrl + product.thumb
   // product.images = product.images.map((el) => serverUrl + el)
-  console.log("product", product)
   return res.status(200).json({
     success: !!product,
     productData: product ? product : "Cannot get product",
@@ -229,7 +228,6 @@ const addVarriant = asyncHandler(async (req, res) => {
     sexual: [...new Set(sexual)].filter((el) => el !== ""),
     size: [...new Set(size)].filter((el) => el !== "")
   }
-  console.log("varriants", varriants)
   const response = await Product.findByIdAndUpdate(
     pid,
     {

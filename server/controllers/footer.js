@@ -3,7 +3,6 @@ const asyncHandler = require('express-async-handler')
 
 const createNewFooter = asyncHandler(async (req, res) => {
     const response = await Footer.create(req.body)
-    console.log("response", response)
     return res.json({
         success: !!response,
         createdFooter: response ? response : 'Cannot create new footer'

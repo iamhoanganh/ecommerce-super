@@ -41,7 +41,6 @@ const History = ({ navigate, location }) => {
     })
   }
 
-  console.log(orders)
 
   return (
     <div className="w-full relative px-4">

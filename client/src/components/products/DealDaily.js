@@ -38,7 +38,6 @@ const DealDaily = ({ dispatch }) => {
       //   setSecond(59)
     }
   }
-  //   console.log(dealDaily)
   // useEffect(() => {
   //     fetchDealDaily()
   // }, [])
