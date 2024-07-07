@@ -2,11 +2,12 @@ import React, { memo } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 
 const MarkdownEditor = ({ label, value, changeValue, name, invalidFields, setInvalidFields, setIsFocusDescription }) => {
+    console.log("process.env.REACT_APP_MCETINY", process.env.REACT_APP_MCETINY)
     return (
         <div className='flex flex-col '>
             <span className=''>{label}</span>
             <Editor
-                apiKey={process.env.REACT_APP_MCETINY}
+                apiKey={"o13uwr1gr0vt61lpdmg2r9x2u3o4ezzvbg4nezjfey523cwh"}
                 initialValue={value}
                 init={{
                     height: 500,
