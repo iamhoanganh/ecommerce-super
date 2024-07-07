@@ -109,6 +109,7 @@ const CustomizeVarriants = ({ customizeVarriant, setCustomizeVarriant, render })
                             required: 'Need fill this field'
                         }}
                         fullWidth
+                        defaultValue={customizeVarriant?.varriants.origin}
                         placeholder='Ngồn gốc của sản phẩm'
                         type='string'
                         style='flex-auto'
@@ -122,6 +123,7 @@ const CustomizeVarriants = ({ customizeVarriant, setCustomizeVarriant, render })
                             required: 'Need fill this field'
                         }}
                         fullWidth
+                        defaultValue={customizeVarriant?.varriants.color}
                         placeholder='Màu sắc của sản phẩm'
                         style='flex-auto'
                     />
@@ -136,6 +138,7 @@ const CustomizeVarriants = ({ customizeVarriant, setCustomizeVarriant, render })
                             required: 'Need fill this field'
                         }}
                         fullWidth
+                        defaultValue={customizeVarriant?.varriants.material}
                         placeholder='Chất liệu của sản phẩm'
                         type='string'
                         style='flex-auto'
@@ -149,6 +152,7 @@ const CustomizeVarriants = ({ customizeVarriant, setCustomizeVarriant, render })
                             required: 'Need fill this field'
                         }}
                         fullWidth
+                        defaultValue={customizeVarriant?.varriants.sexual}
                         placeholder='Giới tính của sản phẩm'
                         style='flex-auto'
                     />
@@ -161,6 +165,7 @@ const CustomizeVarriants = ({ customizeVarriant, setCustomizeVarriant, render })
                             required: 'Need fill this field'
                         }}
                         fullWidth
+                        defaultValue={customizeVarriant?.varriants.size}
                         placeholder='Kích thước của sản phẩm'
                         style='flex-auto'
                     />
