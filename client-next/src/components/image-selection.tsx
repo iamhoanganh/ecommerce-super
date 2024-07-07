@@ -12,8 +12,12 @@ type ImageSelectionProps = {
     }
 }
 function ImageSelection({imageData}: ImageSelectionProps) {
-    const fullImage = [...imageData?.images, imageData?.thumb].map(_ => envConfig.NEXT_PUBLIC_API_URL + _)
-    const [currentImage, setCurrentImage] = React.useState(envConfig.NEXT_PUBLIC_API_URL + imageData?.thumb || "https://cdn.shopify.com/s/files/1/1903/4853/products/z4_1024x1024.jpg?v=1491404851")
+    // const fullImage = [...imageData?.images, imageData?.thumb].map(_ => envConfig.NEXT_PUBLIC_API_URL + _)
+    const mergeThumbToImages = [...imageData?.images, imageData?.thumb].map(_ => {
+        if (_.startsWith("http")) return _
+        return envConfig.NEXT_PUBLIC_API_URL + _
+    })
+    const [currentImage, setCurrentImage] = React.useState(imageData?.thumb.startsWith('http') ? imageData?.thumb : envConfig.NEXT_PUBLIC_API_URL + imageData?.thumb || "https://cdn.shopify.com/s/files/1/1903/4853/products/z4_1024x1024.jpg?v=1491404851")
     return (
         <>
             <figure className="border flex justify-center items-center overflow-hidden">
@@ -23,7 +27,7 @@ function ImageSelection({imageData}: ImageSelectionProps) {
             </figure>
             <Carousel opts={{align: "start"}} className="w-full">
                 <CarouselContent>
-                    {fullImage.map((_, index) => (
+                    {mergeThumbToImages.map((_, index) => (
                         <CarouselItem key={index} className="pl-1 basis-1/4" onClick={() => {setCurrentImage(_)}}>
                             <Card className="rounded-none">
                                 <CardContent className="flex aspect-square items-center justify-center p-0">

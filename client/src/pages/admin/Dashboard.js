@@ -17,8 +17,8 @@ const Dashboard = () => {
         } else toast.error(response.mes)
     }
     return (
-        <>
-            <div>Lay link hinh anh</div>
+        <div className='p-10'>
+            <h2 className='font-bold text-xl'>Lay link hinh anh</h2>
             <div className='flex flex-col gap-2 mt-8'>
                 <label className='font-semibold' htmlFor="thumb">Upload image</label>
                 <input
@@ -34,11 +34,11 @@ const Dashboard = () => {
                 />
             </div>
             {imageLink !== "" && <div className='mt-4'>
-                <img src={imageLink} alt="image" className='w-1/4'/>
-                <span>{imageLink}</span>
+                <img src={process.env.REACT_APP_SERVER_URL + imageLink} alt="image" className='w-1/4 mb-3'/>
+                <span>{process.env.REACT_APP_SERVER_URL + imageLink}</span>
             </div>
             }
-        </>
+        </div>
 )
 }
 

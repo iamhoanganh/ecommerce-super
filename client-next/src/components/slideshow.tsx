@@ -35,7 +35,7 @@ const Slideshow = ({slides}: {slides: SlideType[]}) => {
             {slides.map((_, index) => (
                 <CarouselItem key={_._id}>
                     <Image
-                        src={envConfig.NEXT_PUBLIC_API_URL + _.image}
+                        src={_.image.startsWith('http')? _.image : envConfig.NEXT_PUBLIC_API_URL + _.image}
                         width={800}
                         height={400}
                         alt="banner"

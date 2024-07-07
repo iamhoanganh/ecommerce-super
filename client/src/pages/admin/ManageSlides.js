@@ -72,22 +72,13 @@ const ManageSlides = () => {
             toast.success(response.mes)
         } else toast.error(response.mes)
     }
+    console.log("slides",slides)
     return (
         <div className={clsx('w-full', editElm && 'pl-16')}>
             <h1 className='h-[75px] flex justify-between items-center text-3xl font-bold px-4 border-b'>
                 <span>Quan ly slides</span>
             </h1>
             <div className='w-full p-4'>
-                <div className='flex justify-end py-4'>
-                    <InputField
-                        nameKey={'q'}
-                        value={queries.q}
-                        setValue={setQueries}
-                        style={'w500'}
-                        placeholder='Search name or mail user...'
-                        isHideLabel
-                    />
-                </div>
                 <form onSubmit={handleSubmit(handleUpdate)}>
                     {editElm && <Button type='submit'>Update</Button>}
                     <table className='table-auto mb-6 text-left w-full'>
@@ -106,7 +97,7 @@ const ManageSlides = () => {
                                 <td className='py-2 px-4'>{idx + 1}</td>
                                 <td className='py-2 px-8'>
                                     <img
-                                        src={el.image}
+                                        src={el.image.startsWith('http') ? el.image : `${process.env.REACT_APP_SERVER_URL}/${el.image}`}
                                         alt="thumb"
                                         className="w-15 h-12 object-cover"
                                     />
