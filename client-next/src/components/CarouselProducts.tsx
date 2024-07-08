@@ -4,11 +4,11 @@ import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious}
 import ProductCard from "@/components/product-card";
 import Link from "next/link";
 
-function CarouselProducts({products, title, showAllButton=true, hrefButton="/products"}: {products: any, title: string, showAllButton?: boolean ,hrefButton?: string}) {
+function CarouselProducts({products, title, showAllButton=true, hrefButton="/products", customWrapperClassname, customTitleClassname}: {products: any, title: string, showAllButton?: boolean ,hrefButton?: string, customWrapperClassname?: string, customTitleClassname?: string}) {
     return (
-        <section>
+        <section className={customWrapperClassname}>
             <div className="border-primary border-l-8 flex justify-between items-center">
-                <h3 className="pl-4 text-2xl font-medium py-2">{title}</h3>
+                <h3 className={"pl-4 text-2xl font-medium py-2" + customTitleClassname}>{title}</h3>
                 {showAllButton && <Link href={hrefButton}><Button className="">Xem thêm</Button></Link>}
             </div>
             <Carousel
