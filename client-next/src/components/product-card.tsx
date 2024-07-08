@@ -10,7 +10,7 @@ const ProductCart = ({ product } : {product: ProductType}) => {
     const apiString = envConfig.NEXT_PUBLIC_API_URL
     return (
         <Link href={"/products/" + product._id}>
-            <Card className='flex flex-col items-center'>
+            <Card className='flex flex-col items-center border-primary border-2'>
                 <Image src={apiString + product.thumb} alt={product.title} width={100} height={100}
                        className='h-[200px] w-full p-1  object-cover'/>
                 <h2 className="font-semibold px-2 ellipsis-second-line">{product.title}</h2>

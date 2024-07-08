@@ -12,10 +12,11 @@ import {
 import {FaBars} from "react-icons/fa6";
 import {ModeToggle} from "./mode-toggle";
 import Image from "next/image";
-import logo from "../../public/logo.png"
+import logo from "../../public/chodocutot-logo.png"
 import {Button} from "@/components/ui/button";
 import categoryApiRequest from "@/apiRequests/category";
 import NavLink from "@/components/nav-link";
+import CommandSearch from "@/components/command-search";
 
 
 export default async function Header() {
@@ -44,7 +45,12 @@ export default async function Header() {
                 <Link href='/'>
                     <Image src={logo} alt="logo" width={234} height={50} className='w-[234px] object-contain'/>
                 </Link>
-                <ModeToggle/>
+                <div className="flex gap-x-4 items-center relative">
+                    <div className={"absolute right-12 min-w-[300px] top-0.5 hidden sm:block"}>
+                        <CommandSearch />
+                    </div>
+                    <ModeToggle/>
+                </div>
             </div>
         </header>
     )
