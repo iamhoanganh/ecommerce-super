@@ -6,7 +6,8 @@ import { validate, getBase64 } from 'ultils/helpers'
 import { toast } from 'react-toastify'
 import { apiCreateProduct } from 'apis'
 import { showModal } from 'store/app/appSlice'
-
+import {default as MultiSelect}  from 'react-select';
+import {tagOptions} from "../../ultils/contants";
 
 const CreateProducts = () => {
     const { categories } = useSelector(state => state.app)
@@ -24,6 +25,7 @@ const CreateProducts = () => {
     const changeValue = useCallback((e) => {
         setPayload(e)
     }, [payload])
+    const [selectedOption, setSelectedOption] = useState(tagOptions[0]);
     const handlePreviewThumb = async (file) => {
         const base64Thumb = await getBase64(file)
         setPreview(prev => ({ ...prev, thumb: base64Thumb }))
@@ -62,6 +64,10 @@ const CreateProducts = () => {
             if (finalPayload.color) {
                 const colors = finalPayload.color.split(',')
                 for (let color of colors) formData.append('color', color)
+            }
+            if (Array.isArray(selectedOption)) {
+                const tags = selectedOption.map(el => el.value)
+                for (let tag of tags) formData.append('tags', tag)
             }
             dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }))
             const response = await apiCreateProduct(formData)
@@ -119,18 +125,34 @@ const CreateProducts = () => {
                             placeholder='Giá giảm của sản phẩm mới'
                             type='number'
                         />
-                        <InputForm
-                            label='Số lượng kho'
-                            register={register}
-                            errors={errors}
-                            id='quantity'
-                            validate={{
-                                required: 'Need fill this field'
-                            }}
-                            style='flex-auto'
-                            placeholder='Số lượng kho của sản phẩm mới'
-                            type='number'
-                        />
+                        <div className='flex flex-col h-[78px] gap-2 flex-auto grow basis-1/3'>
+                            <label className='font-semibold'>Trạng thái</label>
+                            <MultiSelect
+                                // defaultValue={[tagOptions[0]]}
+                                isMulti
+                                name="colors"
+                                options={tagOptions}
+                                classNames={{
+                                    control: (state) =>
+                                        state.isFocused ? 'border-red-600' : 'border-grey-300',
+                                }}
+                                classNamePrefix="select"
+                                value={selectedOption}
+                                onChange={setSelectedOption}
+                            />
+                        </div>
+                        {/*<InputForm*/}
+                        {/*    label='Số lượng kho'*/}
+                        {/*    register={register}*/}
+                        {/*    errors={errors}*/}
+                        {/*    id='quantity'*/}
+                        {/*    validate={{*/}
+                        {/*        required: 'Need fill this field'*/}
+                        {/*    }}*/}
+                        {/*    style='flex-auto'*/}
+                        {/*    placeholder='Số lượng kho của sản phẩm mới'*/}
+                        {/*    type='number'*/}
+                        {/*/>*/}
                         {/*<InputForm*/}
                         {/*    label='Màu'*/}
                         {/*    register={register}*/}
@@ -175,6 +197,9 @@ const CreateProducts = () => {
                             style='flex-auto'
                             placeholder='Thương hiệu của sản phẩm mới'
                         />
+                    </div>
+                    <div className='w-full my-6 flex gap-4'>
+
                     </div>
                     <MarkdownEditor
                         name='description'

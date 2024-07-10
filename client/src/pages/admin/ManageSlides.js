@@ -4,7 +4,7 @@ import { roles, blockStatus } from 'ultils/contants'
 import moment from 'moment'
 import { InputField, Pagination, InputForm, Select, Button } from 'components'
 import useDebounce from 'hooks/useDebounce'
-import { useSearchParams } from 'react-router-dom'
+import {Link, useSearchParams} from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import Swal from 'sweetalert2'
@@ -72,7 +72,6 @@ const ManageSlides = () => {
             toast.success(response.mes)
         } else toast.error(response.mes)
     }
-    console.log("slides",slides)
     return (
         <div className={clsx('w-full', editElm && 'pl-16')}>
             <h1 className='h-[75px] flex justify-between items-center text-3xl font-bold px-4 border-b'>
@@ -97,13 +96,13 @@ const ManageSlides = () => {
                                 <td className='py-2 px-4'>{idx + 1}</td>
                                 <td className='py-2 px-8'>
                                     <img
-                                        src={el.image.startsWith('http') ? el.image : `${process.env.REACT_APP_SERVER_URL}/${el.image}`}
+                                        src={el.image.startsWith('http') ? el.image : `${process.env.REACT_APP_SERVER_URL}${el.image}`}
                                         alt="thumb"
                                         className="w-15 h-12 object-cover"
                                     />
                                 </td>
                                 <td className='py-2 px-4'>
-                                    <span>{el.image}</span>
+                                    <Link to={el.image.startsWith('http') ? el.image : `${process.env.REACT_APP_SERVER_URL}${el.image}`}>{el.image.startsWith('http') ? el.image : `${process.env.REACT_APP_SERVER_URL}${el.image}`}</Link>
                                 </td>
 
                                 <td className='py-2 px-4'>{moment(el.createdAt).format('DD/MM/YYYY')}</td>

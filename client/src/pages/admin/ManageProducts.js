@@ -15,6 +15,8 @@ import Swal from "sweetalert2"
 import { toast } from "react-toastify"
 import { BiEdit, BiCustomize } from "react-icons/bi"
 import { RiDeleteBin6Line } from "react-icons/ri"
+import {default as MultiSelect}  from 'react-select';
+import {tagOptions} from "../../ultils/contants";
 
 const ManageProducts = () => {
   const navigate = useNavigate()
@@ -30,6 +32,7 @@ const ManageProducts = () => {
   const [editProduct, setEditProduct] = useState(null)
   const [update, setUpdate] = useState(false)
   const [customizeVarriant, setCustomizeVarriant] = useState(null)
+  const [selectedOption, setSelectedOption] = useState(tagOptions[0]);
 
   const render = useCallback(() => {
     setUpdate(!update)
@@ -126,7 +129,7 @@ const ManageProducts = () => {
             <th className="text-center py-2">Kho</th>
             <th className="text-center py-2">SL Bán</th>
             <th className="text-center py-2">Màu</th>
-            <th className="text-center py-2">Đánh giá</th>
+            {/*<th className="text-center py-2">Đánh giá</th>*/}
             <th className="text-center py-2">Loại</th>
             <th className="text-center py-2">Cập nhật</th>
             <th className="text-center py-2">Hành động</th>
@@ -155,8 +158,8 @@ const ManageProducts = () => {
               <td className="text-center py-2">{el.quantity}</td>
               <td className="text-center py-2">{el.sold}</td>
               <td className="text-center py-2">{el.varriants.color}</td>
-              <td className="text-center py-2">{el.totalRatings}</td>
-              <td className="text-center py-2">{el?.varriants?.length || 0}</td>
+              {/*<td className="text-center py-2">{el.totalRatings}</td>*/}
+              <td className="text-center py-2">{el.tags}</td>
               <td className="text-center py-2">
                 {moment(el.createdAt).format("DD/MM/YYYY")}
               </td>

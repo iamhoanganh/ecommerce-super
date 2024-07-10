@@ -6,7 +6,7 @@ const MarkdownEditor = ({ label, value, changeValue, name, invalidFields, setInv
         <div className='flex flex-col '>
             <span className=''>{label}</span>
             <Editor
-                apiKey={"xl2zprlxa0lk57h8sfu38yvld9wfbsaqeftnu61gpa74rkeb"}
+                apiKey={process.env.REACT_APP_MCETINY}
                 initialValue={value}
                 init={{
                     height: 500,

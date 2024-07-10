@@ -298,3 +298,8 @@ export const statusOrders = [
     value: "Succeed",
   },
 ]
+export const tagOptions = [
+  { value: 'new', label: 'Mới' },
+  { value: 'sale', label: 'Giảm giá' },
+  { value: 'hot', label: 'Bán chạy' }
+]

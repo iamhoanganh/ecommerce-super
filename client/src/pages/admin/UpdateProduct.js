@@ -6,7 +6,8 @@ import { toast } from 'react-toastify'
 import { apiUpdateProduct } from 'apis'
 import { showModal } from 'store/app/appSlice'
 import { useSelector, useDispatch } from 'react-redux'
-
+import {default as MultiSelect}  from 'react-select';
+import {tagOptions} from "../../ultils/contants";
 const UpdateProduct = ({ editProduct, render, setEditProduct }) => {
     const { categories } = useSelector(state => state.app)
     const dispatch = useDispatch()
@@ -18,6 +19,7 @@ const UpdateProduct = ({ editProduct, render, setEditProduct }) => {
         thumb: null,
         images: []
     })
+    const [selectedOption, setSelectedOption] = useState( tagOptions.filter(tag => editProduct?.tags.includes(tag.value)) || tagOptions[0]);
     useEffect(() => {
         reset({
             title: editProduct?.title || '',
@@ -63,8 +65,8 @@ const UpdateProduct = ({ editProduct, render, setEditProduct }) => {
     }, [watch('images')])
 
     const handleUpdateProduct = async (data) => {
-        const invalids = validate(payload, setInvalidFields)
-        if (invalids === 0) {
+        // const invalids = validate(payload, setInvalidFields)
+        // if (invalids === 0) {
             if (data.category) data.category = categories?.find(el => el.title === data.category)?.title
             const finalPayload = { ...data, ...payload }
             finalPayload.thumb = data?.thumb?.length === 0 ? preview.thumb : data.thumb[0]
@@ -76,6 +78,10 @@ const UpdateProduct = ({ editProduct, render, setEditProduct }) => {
             if (data.images.length !== 0) {
                 for (let image of finalPayload.images) formData.append('images', image)
             }
+            if (Array.isArray(selectedOption)) {
+                const tags = selectedOption.map(el => el.value)
+                for (let tag of tags) formData.append('tags', tag)
+            }
             dispatch(showModal({ isShowModal: true, modalChildren: <Loading /> }))
             const response = await apiUpdateProduct(formData, editProduct._id)
             dispatch(showModal({ isShowModal: false, modalChildren: null }))
@@ -85,7 +91,7 @@ const UpdateProduct = ({ editProduct, render, setEditProduct }) => {
                 setEditProduct(null)
             } else toast.error(response.mes)
         }
-    }
+    // }
     return (
         <div className='w-full flex flex-col gap-4 relative'>
             <div className='h-[69px] w-full'></div>
@@ -96,7 +102,7 @@ const UpdateProduct = ({ editProduct, render, setEditProduct }) => {
             <div className='p-4'>
                 <form onSubmit={handleSubmit(handleUpdateProduct)}>
                     <InputForm
-                        label='Name product'
+                        label='Tên sản phẩm'
                         register={register}
                         errors={errors}
                         id='title'
@@ -104,11 +110,11 @@ const UpdateProduct = ({ editProduct, render, setEditProduct }) => {
                             required: 'Need fill this field'
                         }}
                         fullWidth
-                        placeholder='Name of new product'
+                        placeholder='Tên của sản phẩm mới'
                     />
                     <div className='w-full my-6 flex gap-4'>
                         <InputForm
-                            label='Price'
+                            label='Giá'
                             register={register}
                             errors={errors}
                             id='price'
@@ -116,21 +122,37 @@ const UpdateProduct = ({ editProduct, render, setEditProduct }) => {
                                 required: 'Need fill this field'
                             }}
                             style='flex-auto'
-                            placeholder='Price of new product'
+                            placeholder='Giá của sản phẩm mới'
                             type='number'
                         />
                         <InputForm
-                            label='Quantity'
+                            label='Discount'
                             register={register}
                             errors={errors}
-                            id='quantity'
+                            id='discount'
                             validate={{
                                 required: 'Need fill this field'
                             }}
                             style='flex-auto'
-                            placeholder='Quantity of new product'
+                            placeholder='Giá giảm của sản phẩm mới'
                             type='number'
                         />
+                        <div className='flex flex-col h-[78px] gap-2 flex-auto grow basis-1/3'>
+                            <label className='font-semibold'>Trạng thái</label>
+                            <MultiSelect
+                                // defaultValue={[tagOptions[0]]}
+                                isMulti
+                                name="colors"
+                                options={tagOptions}
+                                classNames={{
+                                    control: (state) =>
+                                        state.isFocused ? 'border-red-600' : 'border-grey-300',
+                                }}
+                                classNamePrefix="select"
+                                value={selectedOption}
+                                onChange={setSelectedOption}
+                            />
+                        </div>
                         {/*<InputForm*/}
                         {/*    label='Color'*/}
                         {/*    register={register}*/}
@@ -146,22 +168,36 @@ const UpdateProduct = ({ editProduct, render, setEditProduct }) => {
                     <div className='w-full my-6 flex gap-4'>
                         <Select
                             label='Category'
-                            options={categories?.map(el => ({ code: el.title, value: el.title }))}
+                            options={categories?.map(el => ({code: el.title, value: el.title}))}
                             register={register}
                             id='category'
-                            validate={{ required: 'Need fill this field' }}
+                            validate={{required: 'Need fill this field'}}
                             style='flex-auto'
                             errors={errors}
                             fullWidth
                         />
-                        <Select
-                            label='Brand (Optional)'
-                            options={categories?.find(el => el.title === watch('category'))?.brand?.map(el => ({ code: el.toLowerCase(), value: el }))}
+                        {/*<Select*/}
+                        {/*    label='Brand (Optional)'*/}
+                        {/*    options={categories?.find(el => el.title === watch('category'))?.brand?.map(el => ({*/}
+                        {/*        code: el.toLowerCase(),*/}
+                        {/*        value: el*/}
+                        {/*    }))}*/}
+                        {/*    register={register}*/}
+                        {/*    id='brand'*/}
+                        {/*    style='flex-auto'*/}
+                        {/*    errors={errors}*/}
+                        {/*    fullWidth*/}
+                        {/*/>*/}
+                        <InputForm
+                            label='Thương hiệu'
                             register={register}
-                            id='brand'
-                            style='flex-auto'
                             errors={errors}
-                            fullWidth
+                            id='brand'
+                            validate={{
+                                required: 'Need fill this field'
+                            }}
+                            style='flex-auto'
+                            placeholder='Thương hiệu của sản phẩm mới'
                         />
                     </div>
                     <MarkdownEditor
