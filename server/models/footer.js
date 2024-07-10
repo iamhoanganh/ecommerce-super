@@ -26,6 +26,10 @@ var footerSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    chototLink: {
+        type: String,
+        required: true,
+    },
     latLong: {
         type: String,
         required: true,

@@ -241,6 +241,27 @@ const addVarriant = asyncHandler(async (req, res) => {
   })
 })
 
+const getNewestProducts = asyncHandler(async (req, res) => {
+  const response = await Product.find({ tags: 'new' }).limit(10)
+  return res.status(200).json({
+    success: !!response,
+    products: response ? response : "Cannot get products",
+  })
+})
+const getSaleProduct = asyncHandler(async (req, res) => {
+  const response = await Product.find({ tags: 'sale' }).limit(10)
+  return res.status(200).json({
+    success: !!response,
+    products: response ? response : "Cannot get products",
+  })
+})
+const getHotProducts = asyncHandler(async (req, res) => {
+  const response = await Product.find({ tags: 'hot' }).limit(10)
+  return res.status(200).json({
+    success: !!response,
+    products: response ? response : "Cannot get products",
+  })
+})
 module.exports = {
   createProduct,
   getProduct,
@@ -250,4 +271,7 @@ module.exports = {
   ratings,
   uploadImagesProduct,
   addVarriant,
+  getNewestProducts,
+  getSaleProduct,
+  getHotProducts
 }

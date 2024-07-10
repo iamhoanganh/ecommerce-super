@@ -9,6 +9,9 @@ router.post('/', [verifyAccessToken, isAdmin], uploadImageProduct.fields([
     { name: 'thumb', maxCount: 1 }
 ]), ctrls.createProduct)
 router.get('/', ctrls.getProducts)
+router.get('/new', ctrls.getNewestProducts)
+router.get('/hot', ctrls.getHotProducts)
+router.get('/sale', ctrls.getSaleProduct)
 router.put('/ratings', verifyAccessToken, ctrls.ratings)
 
 

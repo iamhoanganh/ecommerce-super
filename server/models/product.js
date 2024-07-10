@@ -70,6 +70,11 @@ var productSchema = new mongoose.Schema({
         origin: { type: Array },
         material: { type: Array },
     },
+    tags: {
+        type: Array,
+        default: ['new'],
+        required: true
+    },
 }, {
     timestamps: true
 });
