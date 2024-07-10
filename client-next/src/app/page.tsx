@@ -5,22 +5,26 @@ import productApiRequest from "@/apiRequests/product";
 import CarouselProducts from "@/components/CarouselProducts";
 import categoryApiRequest from "@/apiRequests/category";
 import React from "react";
+import CommandSearch from "@/components/command-search";
 
 
 export default async function HomePage() {
     const {
         payload: { products: soldProducts },
-    } = await productApiRequest.getList("?sort=-sold&limit=6");
+    } = await productApiRequest.getList("hot");
     const {
         payload: { products: newProducts },
-    } = await productApiRequest.getList("?sort=-createdAt&limit=6");
+    } = await productApiRequest.getList("new");
     const {
         payload: { products: salesProducts },
-    } = await productApiRequest.getList("?sort=-percentDiscount&limit=6");
+    } = await productApiRequest.getList("sale");
     const {payload: {prodCategories}} = await categoryApiRequest.getCategoriesList()
     const {payload: {slides}} = await categoryApiRequest.getSlidesList()
     return (
         <div className="w-main m-auto flex flex-col">
+            <div className="relative w-full h-[40px] my-4 z-10 sm:hidden">
+                <CommandSearch customWrapperClassname="absolute" />
+            </div>
             <div className="flex gap-x-3">
                 <nav className="basis-1/5 flex-col justify-between items-center hidden sm:flex border-r-2 border-amber-500">
                     <span className="px-2 py-3 bg-primary text-white w-full text-center font-semibold">DANH MỤC SẢN PHẨM</span>

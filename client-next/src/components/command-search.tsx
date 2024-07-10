@@ -25,7 +25,7 @@ export function useOutsideClick(handleFunction =  () => {}, listenCapturing = tr
     }, [handleFunction, listenCapturing]);
     return ref;
 }
-export default function CommandSearch() {
+export default function CommandSearch({customWrapperClassname} : {customWrapperClassname?: string}) {
     const [searchValue, setSearchValue] = React.useState("");
     const [open, setOpen] = React.useState(false)
     const [listProduct, setListProduct] = React.useState<ProductType[]>([])
@@ -43,14 +43,14 @@ export default function CommandSearch() {
         fetchProduct()
     }, [searchValue])
     return (
-        <Command ref={ref} className="rounded-lg border shadow-md">
+        <Command ref={ref} className={"rounded-lg border shadow-md relative" + customWrapperClassname}>
             <CommandInput className="h-[36px]" placeholder="Nhập sản phẩm muốn tìm..." value={searchValue} onValueChange={handleValueChange}/>
-            <CommandList className={clsx(open ? "block" : "hidden")}>
+            <CommandList className={clsx("absolute w-full top-[40px] z-10 bg-white",open ? "block" : "hidden ")}>
                 {listProduct.map((item, index) => (
-                    <CommandItem className="gap-x-3" key={item._id + index} value={item.title + item._id} onSelect={() => {
+                    <CommandItem className="gap-x-3 " key={item._id + index} value={item.title + item._id} onSelect={() => {
                         router.push(`/products/${item._id}`)
                     }}>
-                        <Image src={envConfig.NEXT_PUBLIC_API_URL + item.thumb} alt={item.title} width={32} height={32} />
+                        <Image src={envConfig.NEXT_PUBLIC_API_URL + item.thumb} alt={item.title} width={32} height={32} className="w-[40px] h-[40px] sm:w-[40px] sm:h-[40px] object-cover" />
                         <span>{item.title}</span>
                     </CommandItem>
                 ))}
