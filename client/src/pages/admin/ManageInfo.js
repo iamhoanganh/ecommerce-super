@@ -53,7 +53,7 @@ const ManageInfo = () => {
                     youtubeLink: data.youtubeLink,
                     facebookLink: data.facebookLink,
                     tiktokLink: data.tiktokLink,
-                    chototLink: data.tiktokLink,
+                    chototLink: data.chototLink,
                     latLong: data.latLong
                 }
                 const response = await apiUpdateFooter(payload, data.id)
