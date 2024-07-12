@@ -1,3 +1,4 @@
+import {Metadata} from "next";
 import NavLink from "@/components/nav-link";
 import Slideshow from "@/components/slideshow";
 import {Separator} from "@/components/ui/separator"
@@ -7,6 +8,10 @@ import categoryApiRequest from "@/apiRequests/category";
 import React from "react";
 import CommandSearch from "@/components/command-search";
 
+export const metadata: Metadata = {
+    title: 'Trang chủ',
+    description: 'Chợ đồ cũ tốt - Mua bán đồ cũ, đồ secondhand, đồ đã qua sử dụng, đồ cũ giá rẻ, đồ cũ chất lượng tốt nhất tại Việt Nam.',
+}
 
 export default async function HomePage() {
     const {
