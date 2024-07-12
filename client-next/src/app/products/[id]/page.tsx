@@ -6,12 +6,41 @@ import {Separator} from "@/components/ui/separator";
 import CarouselProducts from "@/components/CarouselProducts";
 import {formatPrice} from "@/lib/utils";
 import VariantSelect from "@/components/variant-select";
+import { cache } from 'react'
+import { Metadata, ResolvingMetadata } from 'next'
 
-export default async function ProductPage({params}: {
-    params: { id: string };
-}) {
+const getDetail = cache(productApiRequest.getDetail)
+type Props = {
+  params: { id: string }
+  searchParams: { [key: string]: string | string[] | undefined }
+}
+
+
+export async function generateMetadata(
+  { params, searchParams }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  // read route params
+  const id = params.id
+ 
+  // fetch data
+  const {payload: {productData}} = await getDetail(id)
+ 
+  // optionally access and extend (rather than replace) parent metadata
+  const previousImages = (await parent).openGraph?.images || []
+ 
+  return {
+    title: productData.title,
+    description: productData.description,
+    // openGraph: {
+    //   images: ['/some-specific-page-image.jpg', ...previousImages],
+    // },
+  }
+}
+
+export default async function ProductPage({ params, searchParams }: Props) {
     const {id} = params;
-    const {payload: {productData}} = await productApiRequest.getDetail(id);
+    const {payload: {productData}} = await getDetail(id);
     const {
         thumb,
         images,

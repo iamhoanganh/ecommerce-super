@@ -11,7 +11,7 @@ const ProductCart = ({ product } : {product: ProductType}) => {
     return (
         <Link href={"/products/" + product._id}>
             <Card className='flex flex-col items-center border-primary border-2'>
-                <Image src={apiString + product.thumb} alt={product.title} width={100} height={100}
+                <Image src={apiString + product.thumb} alt={product.title} width={200} height={200}
                        className='h-[200px] w-full p-1  object-cover'/>
                 <h2 className="font-semibold px-2 ellipsis-second-line">{product.title}</h2>
                 <del className="text-sm ml-3 text-stone-500">{formatPrice(product.price)}</del>
