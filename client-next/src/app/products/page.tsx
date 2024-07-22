@@ -12,12 +12,14 @@ import Paginate from "@/components/paginate";
 import SortOption from "@/components/sort-option";
 import {PAGE_SIZE} from "@/lib/constant";
 import type {Metadata} from "next";
+import { baseOpenGraph } from "../shared-metadata";
 type ProductListPageProps = {
     searchParams: { [key: string]: string | string[] | undefined }
 }
 export const metadata: Metadata = {
     title: 'Danh sách sản phẩm',
     description: 'Chợ đồ cũ tốt - Mua bán đồ cũ, đồ secondhand, đồ đã qua sử dụng, đồ cũ giá rẻ, đồ cũ chất lượng tốt nhất tại Việt Nam.',
+    openGraph: baseOpenGraph
 }
 export default async function ProductListPage({searchParams,}: ProductListPageProps) {
     const currentSort = searchParams.sort || "-createdAt";

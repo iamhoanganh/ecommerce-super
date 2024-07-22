@@ -8,6 +8,8 @@ import { formatPrice } from "@/lib/utils";
 import VariantSelect from "@/components/variant-select";
 import { cache } from "react";
 import { Metadata, ResolvingMetadata } from "next";
+import envConfig from "@/config";
+import { baseOpenGraph } from "@/app/shared-metadata";
 
 const getDetail = cache(productApiRequest.getDetail);
 type Props = {
@@ -26,16 +28,23 @@ export async function generateMetadata(
   const {
     payload: { productData },
   } = await getDetail(id);
-
-  // optionally access and extend (rather than replace) parent metadata
-  const previousImages = (await parent).openGraph?.images || [];
+  const url = envConfig.NEXT_PUBLIC_URL + "/products/" + id;
+  const apiURL = envConfig.NEXT_PUBLIC_API_URL;
 
   return {
     title: productData.title,
     description: productData.description,
-    // openGraph: {
-    //   images: ['/some-specific-page-image.jpg', ...previousImages],
-    // },
+    openGraph: {
+      ...baseOpenGraph,
+      title: productData.title,
+      description: productData.description,
+      url,
+      images: [
+        {
+          url: apiURL + productData.thumb,
+        },
+      ],
+    },
   };
 }
 

@@ -7,10 +7,17 @@ import CarouselProducts from "@/components/CarouselProducts";
 import categoryApiRequest from "@/apiRequests/category";
 import React from "react";
 import CommandSearch from "@/components/command-search";
+import { baseOpenGraph } from "./shared-metadata";
 
 export const metadata: Metadata = {
-    title: 'Trang chủ',
+    title: 'Trang chủ | Chợ đồ cũ tốt',
     description: 'Chợ đồ cũ tốt - Mua bán đồ cũ, đồ secondhand, đồ đã qua sử dụng, đồ cũ giá rẻ, đồ cũ chất lượng tốt nhất tại Việt Nam.',
+    openGraph: {
+        ...baseOpenGraph,
+        title: 'Trang chủ | Chợ đồ cũ tốt',
+        description: 'Chợ đồ cũ tốt - Mua bán đồ cũ, đồ secondhand, đồ đã qua sử dụng, đồ cũ giá rẻ, đồ cũ chất lượng tốt nhất tại Việt Nam.',
+        url: 'https://chodocutot.com',
+      },
 }
 
 export default async function HomePage() {
