@@ -8,6 +8,7 @@ import categoryApiRequest from "@/apiRequests/category";
 import React from "react";
 import CommandSearch from "@/components/command-search";
 import { baseOpenGraph } from "./shared-metadata";
+import {cookies} from "next/headers";
 
 export const metadata: Metadata = {
     title: 'Trang chủ | Chợ đồ cũ tốt',
@@ -32,6 +33,8 @@ export default async function HomePage() {
     } = await productApiRequest.getList("sale");
     const {payload: {prodCategories}} = await categoryApiRequest.getCategoriesList()
     const {payload: {slides}} = await categoryApiRequest.getSlidesList()
+    const cookie = cookies()
+
     return (
         <div className="w-main m-auto flex flex-col">
             <div className="relative w-full h-[40px] my-4 z-10 sm:hidden">
