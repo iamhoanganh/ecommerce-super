@@ -55,8 +55,8 @@ export default async function HomePage() {
             <CarouselProducts customWrapperClassname="bg-[#001824] py-5 rounded-sm px-2" customTitleClassname=" text-[#ffbc40]" products={newProducts} title="Sản phẩm mới" hrefButton={"products/?sort=-createdAt&limit=12"} />
             <Separator className="my-4 bg-amber-500 h-0.5"/>
             <CarouselProducts customWrapperClassname="bg-[#910101] py-5 rounded-sm px-2" customTitleClassname=" text-[#ffbc40]" products={salesProducts} title="Sản phẩm giảm giá" hrefButton={"products/?sort=-percentDiscount&limit=12"} />
-            <Separator className="my-4 bg-amber-500 h-0.5"/>
-            <CarouselProducts  customWrapperClassname="bg-[#006738] py-5 rounded-sm px-2" products={soldProducts} customTitleClassname=" text-white" title="Sản phẩm bán chạy, hot" hrefButton={"products/?sort=-sold&limit=12"} />
+            {/*<Separator className="my-4 bg-amber-500 h-0.5"/>*/}
+            {/*<CarouselProducts  customWrapperClassname="bg-[#006738] py-5 rounded-sm px-2" products={soldProducts} customTitleClassname=" text-white" title="Sản phẩm bán chạy, hot" hrefButton={"products/?sort=-sold&limit=12"} />*/}
         </div>
     );
 }
