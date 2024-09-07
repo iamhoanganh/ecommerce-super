@@ -13,6 +13,7 @@ import SortOption from "@/components/sort-option";
 import {PAGE_SIZE} from "@/lib/constant";
 import type {Metadata} from "next";
 import { baseOpenGraph } from "../shared-metadata";
+import {cookies} from "next/headers";
 type ProductListPageProps = {
     searchParams: { [key: string]: string | string[] | undefined }
 }
@@ -31,6 +32,7 @@ export default async function ProductListPage({searchParams,}: ProductListPagePr
     const {
       payload: { products, counts },
     } = dataResponse;
+    const cookie = cookies()
   return (
     <>
       <Breadcrumb>
